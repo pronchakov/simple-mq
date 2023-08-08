@@ -1,4 +1,7 @@
 ## Simple MQ
+
+Current status: Early development
+
 ### About
 This is a simple implementation of JMS interface. Just for fun :-)
 

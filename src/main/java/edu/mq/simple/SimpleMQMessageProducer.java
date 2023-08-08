@@ -1,115 +1,45 @@
 package edu.mq.simple;
 
-import jakarta.jms.*;
+import edu.mq.simple.json.MessageToJsonMapper;
+import edu.mq.simple.message.SimpleMQTextMessage;
+import jakarta.jms.Destination;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.Queue;
+import lombok.SneakyThrows;
 
-public class SimpleMQMessageProducer implements MessageProducer {
-    @Override
-    public void setDisableMessageID(boolean value) throws JMSException {
+import java.io.File;
+import java.io.FileWriter;
+import java.util.Date;
 
+public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
+
+    private String baseDir;
+    private Destination destination;
+    private MessageToJsonMapper mapper;
+
+    public SimpleMQMessageProducer(String baseDir, Destination destination) {
+        this.baseDir = baseDir;
+        this.destination = destination;
+        mapper = new MessageToJsonMapper();
     }
 
+    @SneakyThrows
     @Override
-    public boolean getDisableMessageID() throws JMSException {
-        return false;
-    }
+    public void send(Message message) throws JMSException {
+        var queue = (Queue) destination;
+        final var file = new File(baseDir + "/" + queue.getQueueName() + "/" + new Date().getTime() + ".mqd");
 
-    @Override
-    public void setDisableMessageTimestamp(boolean value) throws JMSException {
+        final var textMessage = (SimpleMQTextMessage) message;
+        final var text = mapper.transformMessage(textMessage.getMessage());
 
-    }
-
-    @Override
-    public boolean getDisableMessageTimestamp() throws JMSException {
-        return false;
-    }
-
-    @Override
-    public void setDeliveryMode(int deliveryMode) throws JMSException {
-
-    }
-
-    @Override
-    public int getDeliveryMode() throws JMSException {
-        return 0;
-    }
-
-    @Override
-    public void setPriority(int defaultPriority) throws JMSException {
-
-    }
-
-    @Override
-    public int getPriority() throws JMSException {
-        return 0;
-    }
-
-    @Override
-    public void setTimeToLive(long timeToLive) throws JMSException {
-
-    }
-
-    @Override
-    public long getTimeToLive() throws JMSException {
-        return 0;
-    }
-
-    @Override
-    public void setDeliveryDelay(long deliveryDelay) throws JMSException {
-
-    }
-
-    @Override
-    public long getDeliveryDelay() throws JMSException {
-        return 0;
-    }
-
-    @Override
-    public Destination getDestination() throws JMSException {
-        return null;
+        final var fileWriter = new FileWriter(file);
+        fileWriter.write(text);
+        fileWriter.close();
     }
 
     @Override
     public void close() throws JMSException {
-
-    }
-
-    @Override
-    public void send(Message message) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Message message, int deliveryMode, int priority, long timeToLive) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Destination destination, Message message) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Message message, CompletionListener completionListener) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Destination destination, Message message, CompletionListener completionListener) throws JMSException {
-
-    }
-
-    @Override
-    public void send(Destination destination, Message message, int deliveryMode, int priority, long timeToLive, CompletionListener completionListener) throws JMSException {
 
     }
 }

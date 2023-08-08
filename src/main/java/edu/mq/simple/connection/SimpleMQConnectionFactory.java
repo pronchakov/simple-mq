@@ -1,12 +1,12 @@
 package edu.mq.simple.connection;
 
 import jakarta.jms.Connection;
-import jakarta.jms.ConnectionFactory;
 import jakarta.jms.JMSContext;
 import jakarta.jms.JMSException;
 
-public class SimpleMQConnectionFactory implements ConnectionFactory {
+import java.io.File;
 
+public class SimpleMQConnectionFactory extends SimpleMQAbstractConnectionFactory {
     private String baseDir;
 
     public SimpleMQConnectionFactory(String baseDir) {
@@ -15,31 +15,6 @@ public class SimpleMQConnectionFactory implements ConnectionFactory {
 
     @Override
     public Connection createConnection() throws JMSException {
-        return new SimpleMQConnection();
-    }
-
-    @Override
-    public Connection createConnection(String userName, String password) throws JMSException {
-        return createConnection();
-    }
-
-    @Override
-    public JMSContext createContext() {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public JMSContext createContext(String userName, String password) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public JMSContext createContext(String userName, String password, int sessionMode) {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public JMSContext createContext(int sessionMode) {
-        throw new RuntimeException("Not implemented");
+        return new SimpleMQConnection(baseDir);
     }
 }
