@@ -1,0 +1,7 @@
+{
+  "headers": {
+    "header1": "value1",
+    "header2": 12
+  },
+  "body": "Message body"
+}
