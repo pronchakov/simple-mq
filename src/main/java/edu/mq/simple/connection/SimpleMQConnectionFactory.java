@@ -1,17 +1,17 @@
 package edu.mq.simple.connection;
 
 import jakarta.jms.Connection;
-import jakarta.jms.JMSContext;
 import jakarta.jms.JMSException;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NonNull;
 
 import java.io.File;
 
+@Builder
+@Data
 public class SimpleMQConnectionFactory extends SimpleMQAbstractConnectionFactory {
-    private String baseDir;
-
-    public SimpleMQConnectionFactory(String baseDir) {
-        this.baseDir = baseDir;
-    }
+    @NonNull private String baseDir;
 
     @Override
     public Connection createConnection() throws JMSException {

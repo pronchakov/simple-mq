@@ -29,6 +29,13 @@
             <version>2.15.2</version>
         </dependency>
 
+        <!-- IO -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.13.0</version>
+        </dependency>
+
         <!-- Miscellaneous -->
         <dependency>
             <groupId>org.projectlombok</groupId>

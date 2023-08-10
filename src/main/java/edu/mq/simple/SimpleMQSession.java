@@ -1,18 +1,22 @@
 package edu.mq.simple;
 
+import edu.mq.simple.connection.SimpleMQConnection;
+import edu.mq.simple.storage.FileSystemStorage;
+import edu.mq.simple.storage.Storage;
 import edu.mq.simple.message.SimpleMQTextMessage;
 import jakarta.jms.*;
+import lombok.Data;
+import lombok.NonNull;
 
-import java.io.File;
-
+@Data
 public class SimpleMQSession extends SimpleMQAbstractSession {
+    private SimpleMQConnection connection;
+    private Storage storage;
 
-    private String baseDir;
-
-    public SimpleMQSession(String baseDir) {
-        this.baseDir = baseDir;
+    public SimpleMQSession(@NonNull SimpleMQConnection connection) {
+        this.connection = connection;
+        storage = new FileSystemStorage(connection.getBaseDir());
     }
-
 
     @Override
     public TextMessage createTextMessage(String text) throws JMSException {
@@ -21,12 +25,12 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
 
     @Override
     public MessageProducer createProducer(Destination destination) throws JMSException {
-        return new SimpleMQMessageProducer(baseDir, destination);
+        return new SimpleMQMessageProducer(this, destination);
     }
 
     @Override
     public Queue createQueue(String queueName) throws JMSException {
-        new File(baseDir + "/" + queueName).mkdirs();
+        storage.createQueue(queueName);
         return new SimpleMQQueue(queueName);
     }
 
