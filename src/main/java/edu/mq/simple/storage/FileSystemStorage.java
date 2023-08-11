@@ -20,6 +20,11 @@ public class FileSystemStorage implements Storage{
     }
 
     @Override
+    public String getBasePath() {
+        return basePath;
+    }
+
+    @Override
     public void sendMessage(String queueName, String message) throws CannotSendMessageException {
         final var filePath = new StringBuilder()
                 .append(basePath)

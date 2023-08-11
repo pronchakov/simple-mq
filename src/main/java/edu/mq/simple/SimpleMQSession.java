@@ -29,6 +29,11 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
     }
 
     @Override
+    public MessageConsumer createConsumer(Destination destination) throws JMSException {
+        return new SimpleMQMessageConsumer(this, destination);
+    }
+
+    @Override
     public Queue createQueue(String queueName) throws JMSException {
         storage.createQueue(queueName);
         return new SimpleMQQueue(queueName);
@@ -38,4 +43,6 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
     public void close() throws JMSException {
 
     }
+
+
 }
