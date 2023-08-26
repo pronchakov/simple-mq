@@ -48,7 +48,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
 
             var jmsMessage = switch (message.getBodyType()) {
                 case "text" -> new SimpleMQTextMessage(message.getBody());
-                case "bytes" -> new SimpleMQBytesMessage();
+                case "bytes" -> new SimpleMQBytesMessage(message.getBody());
                 default -> null;
             };
 
