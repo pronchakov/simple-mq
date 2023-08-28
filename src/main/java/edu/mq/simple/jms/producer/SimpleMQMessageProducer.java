@@ -1,9 +1,8 @@
-package edu.mq.simple;
+package edu.mq.simple.jms.producer;
 
-import edu.mq.simple.json.CannotTransformMessageToJSONException;
-import edu.mq.simple.json.MessageToJsonMapper;
-import edu.mq.simple.message.SimpleMQJMSMessageConverter;
-import edu.mq.simple.message.abstrct.SimpleMQAbstractMessage;
+import edu.mq.simple.jms.session.SimpleMQSession;
+import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
+import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
 import edu.mq.simple.storage.CannotSendMessageException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
@@ -21,7 +20,6 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
     private SimpleMQSession session;
     @NonNull
     private Destination destination;
-    private MessageToJsonMapper mapper = new MessageToJsonMapper();
     private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
 
     @Override
@@ -34,10 +32,7 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
 
         final var universalMessage = jmsMessageConverter.convert(abstractMessage);
         try {
-            var text = mapper.transformMessage(universalMessage);
-            session.getStorage().sendMessage(queue.getQueueName(), text);
-        } catch (CannotTransformMessageToJSONException e) {
-            throw new JMSException("Cannot prepare JMS message for saving", "SMQ001", e);
+            session.getStorage().sendMessage(queue.getQueueName(), universalMessage);
         } catch (CannotSendMessageException e) {
             throw new JMSException("Cannot save JMS message", "SMQ002", e);
         }

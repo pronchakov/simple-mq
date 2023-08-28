@@ -1,9 +1,7 @@
-package edu.mq.simple.message;
+package edu.mq.simple.jms.message;
 
 import edu.mq.simple.entity.UniversalMessage;
-import edu.mq.simple.message.abstrct.SimpleMQAbstractMessage;
-
-import java.util.Locale;
+import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
 
 public class SimpleMQJMSMessageConverter {
 

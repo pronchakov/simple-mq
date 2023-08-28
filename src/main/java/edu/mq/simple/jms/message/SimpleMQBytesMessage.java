@@ -1,6 +1,6 @@
-package edu.mq.simple.message;
+package edu.mq.simple.jms.message;
 
-import edu.mq.simple.message.abstrct.SimpleMQAbstractBytesMessage;
+import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractBytesMessage;
 import jakarta.jms.JMSException;
 import lombok.SneakyThrows;
 

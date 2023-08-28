@@ -1,7 +1,10 @@
-package edu.mq.simple;
+package edu.mq.simple.jms.session;
 
-import edu.mq.simple.connection.SimpleMQConnection;
-import edu.mq.simple.message.SimpleMQTextMessage;
+import edu.mq.simple.jms.consumer.SimpleMQMessageConsumer;
+import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
+import edu.mq.simple.jms.destination.SimpleMQQueue;
+import edu.mq.simple.jms.connection.SimpleMQConnection;
+import edu.mq.simple.jms.message.SimpleMQTextMessage;
 import edu.mq.simple.storage.FileSystemStorage;
 import edu.mq.simple.storage.Storage;
 import jakarta.jms.*;

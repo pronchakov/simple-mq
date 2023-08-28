@@ -1,6 +1,6 @@
-package edu.mq.simple.message;
+package edu.mq.simple.jms.message;
 
-import edu.mq.simple.message.abstrct.SimpleMQAbstractTextMessage;
+import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractTextMessage;
 import jakarta.jms.JMSException;
 
 public class SimpleMQTextMessage extends SimpleMQAbstractTextMessage {

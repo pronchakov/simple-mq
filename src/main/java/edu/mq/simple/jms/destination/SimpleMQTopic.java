@@ -1,4 +1,4 @@
-package edu.mq.simple;
+package edu.mq.simple.jms.destination;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.Topic;

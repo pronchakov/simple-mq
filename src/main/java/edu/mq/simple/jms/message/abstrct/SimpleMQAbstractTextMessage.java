@@ -1,4 +1,4 @@
-package edu.mq.simple.message.abstrct;
+package edu.mq.simple.jms.message.abstrct;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.TextMessage;

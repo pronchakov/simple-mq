@@ -1,4 +1,4 @@
-package edu.mq.simple.connection;
+package edu.mq.simple.jms.connection;
 
 import jakarta.jms.Connection;
 import jakarta.jms.ConnectionFactory;

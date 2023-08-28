@@ -1,6 +1,6 @@
-package edu.mq.simple.message.abstrct;
+package edu.mq.simple.jms.message.abstrct;
 
-import edu.mq.simple.message.SimpleMQJMSMessageType;
+import edu.mq.simple.jms.message.SimpleMQJMSMessageType;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;

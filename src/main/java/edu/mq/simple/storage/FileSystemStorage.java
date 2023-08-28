@@ -1,5 +1,8 @@
 package edu.mq.simple.storage;
 
+import edu.mq.simple.entity.UniversalMessage;
+import edu.mq.simple.storage.json.CannotTransformMessageToJSONException;
+import edu.mq.simple.storage.json.JSONMessageMapper;
 import lombok.Cleanup;
 import org.apache.commons.io.IOUtils;
 
@@ -11,6 +14,7 @@ import java.util.Date;
 public class FileSystemStorage implements Storage {
 
     private final String basePath;
+    private JSONMessageMapper jsonMapper = new JSONMessageMapper();
 
     public FileSystemStorage(String basePath) {
         if (!basePath.endsWith("/")) {
@@ -25,7 +29,7 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public void sendMessage(String queueName, String message) throws CannotSendMessageException {
+    public void sendMessage(String queueName, UniversalMessage message) throws CannotSendMessageException {
         final var filePath = basePath +
                 queueName +
                 "/" +
@@ -34,8 +38,12 @@ public class FileSystemStorage implements Storage {
 
         final var file = new File(filePath);
         try {
+            var text = jsonMapper.transformMessage(message);
+
             @Cleanup final var fileWriter = new FileWriter(file);
-            IOUtils.write(message, fileWriter);
+            IOUtils.write(text, fileWriter);
+        } catch (CannotTransformMessageToJSONException e) {
+            throw new CannotSendMessageException("Cannot prepare JMS message for saving", e);
         } catch (IOException e) {
             throw new CannotSendMessageException("ERROR: cannot write to file " + file.getAbsolutePath() + ": " + e.getMessage(), e);
         }

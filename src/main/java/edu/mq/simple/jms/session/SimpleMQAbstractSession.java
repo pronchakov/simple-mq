@@ -1,6 +1,6 @@
-package edu.mq.simple;
+package edu.mq.simple.jms.session;
 
-import edu.mq.simple.message.SimpleMQBytesMessage;
+import edu.mq.simple.jms.message.SimpleMQBytesMessage;
 import jakarta.jms.*;
 
 import java.io.Serializable;

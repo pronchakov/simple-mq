@@ -1,4 +1,4 @@
-package edu.mq.simple.message;
+package edu.mq.simple.jms.message;
 
 import lombok.Getter;
 

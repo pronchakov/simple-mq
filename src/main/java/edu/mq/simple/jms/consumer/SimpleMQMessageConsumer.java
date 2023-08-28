@@ -1,8 +1,9 @@
-package edu.mq.simple;
+package edu.mq.simple.jms.consumer;
 
-import edu.mq.simple.json.JsonToMessageMapper;
-import edu.mq.simple.message.SimpleMQJMSMessageConverter;
-import edu.mq.simple.message.UnknownTypeException;
+import edu.mq.simple.jms.session.SimpleMQSession;
+import edu.mq.simple.storage.json.JSONMessageMapper;
+import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
+import edu.mq.simple.jms.message.UnknownTypeException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
@@ -26,7 +27,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     private SimpleMQSession session;
     @NonNull
     private Destination destination;
-    private JsonToMessageMapper mapper = new JsonToMessageMapper();
+    private JSONMessageMapper jsonMapper = new JSONMessageMapper();
     private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
 
     public SimpleMQMessageConsumer(@NonNull SimpleMQSession session, @NonNull Destination destination) throws JMSException {
@@ -44,8 +45,8 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
 
         try {
             @Cleanup final FileReader fileReader = new FileReader(files[nextFileIndex]);
-            final var bytes = IOUtils.toByteArray(fileReader);
-            final var message = mapper.transformMessage(bytes);
+            final var bytes = IOUtils.toByteArray(fileReader); // todo: move to Storage
+            final var message = jsonMapper.transformMessage(bytes);
             final var jmsMessage = jmsMessageConverter.convert(message);
             nextFileIndex++;
             return jmsMessage;
