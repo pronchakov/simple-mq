@@ -14,13 +14,22 @@ public class SimpleMQBytesMessage extends SimpleMQAbstractBytesMessage {
     private ByteArrayOutputStream os;
     private ByteArrayInputStream is;
 
-    public SimpleMQBytesMessage() {
-        this.os = new ByteArrayOutputStream();
+    private SimpleMQBytesMessage() {
+
     }
 
-    public SimpleMQBytesMessage(String body) {
-        final var bytes = Base64.getDecoder().decode(body);
-        this.is = new ByteArrayInputStream(bytes);
+    public static SimpleMQBytesMessage forSend() {
+        final var bytesMessage = new SimpleMQBytesMessage();
+        bytesMessage.os = new ByteArrayOutputStream();
+        return bytesMessage;
+    }
+
+    public static SimpleMQBytesMessage forReceive(String base64encodedBytes) {
+        final var bytes = Base64.getDecoder().decode(base64encodedBytes);
+
+        final var bytesMessage = new SimpleMQBytesMessage();
+        bytesMessage.is = new ByteArrayInputStream(bytes);
+        return bytesMessage;
     }
 
     @SneakyThrows

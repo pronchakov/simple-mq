@@ -20,7 +20,7 @@ public class SimpleMQJMSMessageConverter {
         final var messageType = SimpleMQJMSMessageType.valueOf(type);
         var result = switch (messageType) {
             case TEXT -> new SimpleMQTextMessage(message.getBody());
-            case BYTES -> new SimpleMQBytesMessage(message.getBody());
+            case BYTES -> SimpleMQBytesMessage.forReceive(message.getBody());
             default -> throw new UnknownTypeException(type);
         };
 

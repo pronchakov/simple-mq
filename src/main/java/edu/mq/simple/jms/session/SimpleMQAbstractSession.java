@@ -1,6 +1,5 @@
 package edu.mq.simple.jms.session;
 
-import edu.mq.simple.jms.message.SimpleMQBytesMessage;
 import jakarta.jms.*;
 
 import java.io.Serializable;
@@ -8,7 +7,7 @@ import java.io.Serializable;
 public abstract class SimpleMQAbstractSession implements Session {
     @Override
     public BytesMessage createBytesMessage() throws JMSException {
-        return new SimpleMQBytesMessage();
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

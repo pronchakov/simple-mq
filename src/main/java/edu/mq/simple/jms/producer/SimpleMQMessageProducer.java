@@ -1,8 +1,8 @@
 package edu.mq.simple.jms.producer;
 
-import edu.mq.simple.jms.session.SimpleMQSession;
 import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
 import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
+import edu.mq.simple.jms.session.SimpleMQSession;
 import edu.mq.simple.storage.CannotSendMessageException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;

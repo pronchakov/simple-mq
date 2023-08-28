@@ -1,10 +1,11 @@
 package edu.mq.simple.jms.session;
 
-import edu.mq.simple.jms.consumer.SimpleMQMessageConsumer;
-import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
-import edu.mq.simple.jms.destination.SimpleMQQueue;
 import edu.mq.simple.jms.connection.SimpleMQConnection;
+import edu.mq.simple.jms.consumer.SimpleMQMessageConsumer;
+import edu.mq.simple.jms.destination.SimpleMQQueue;
+import edu.mq.simple.jms.message.SimpleMQBytesMessage;
 import edu.mq.simple.jms.message.SimpleMQTextMessage;
+import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
 import edu.mq.simple.storage.FileSystemStorage;
 import edu.mq.simple.storage.Storage;
 import jakarta.jms.*;
@@ -19,6 +20,11 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
     public SimpleMQSession(@NonNull SimpleMQConnection connection) {
         this.connection = connection;
         storage = new FileSystemStorage(connection.getBaseDir());
+    }
+
+    @Override
+    public BytesMessage createBytesMessage() throws JMSException {
+        return SimpleMQBytesMessage.forSend();
     }
 
     @Override

@@ -1,9 +1,9 @@
 package edu.mq.simple.jms.consumer;
 
-import edu.mq.simple.jms.session.SimpleMQSession;
-import edu.mq.simple.storage.json.JSONMessageMapper;
 import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
 import edu.mq.simple.jms.message.UnknownTypeException;
+import edu.mq.simple.jms.session.SimpleMQSession;
+import edu.mq.simple.storage.json.JSONMessageMapper;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
