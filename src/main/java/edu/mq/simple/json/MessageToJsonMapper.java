@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mq.simple.entity.UniversalMessage;
 
 public class MessageToJsonMapper {
-    private ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper = new ObjectMapper();
 
     public MessageToJsonMapper() {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);

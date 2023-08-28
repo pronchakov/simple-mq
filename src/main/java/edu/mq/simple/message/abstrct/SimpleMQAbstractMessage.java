@@ -1,146 +1,17 @@
-package edu.mq.simple.message;
+package edu.mq.simple.message.abstrct;
 
-import jakarta.jms.BytesMessage;
+import edu.mq.simple.message.SimpleMQJMSMessageType;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
+import jakarta.jms.Message;
 
 import java.util.Enumeration;
 
-public class SimpleMQAbstractBytesMessage extends SimpleMQAbstractMessage implements BytesMessage {
-    @Override
-    public long getBodyLength() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
+public abstract class SimpleMQAbstractMessage implements Message {
 
-    @Override
-    public boolean readBoolean() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
+    public abstract SimpleMQJMSMessageType getType();
 
-    @Override
-    public byte readByte() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public int readUnsignedByte() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public short readShort() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public int readUnsignedShort() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public char readChar() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public int readInt() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public long readLong() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public float readFloat() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public double readDouble() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public String readUTF() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public int readBytes(byte[] value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public int readBytes(byte[] value, int length) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeBoolean(boolean value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeByte(byte value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeShort(short value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeChar(char value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeInt(int value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeLong(long value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeFloat(float value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeDouble(double value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeUTF(String value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeBytes(byte[] value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeBytes(byte[] value, int offset, int length) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void writeObject(Object value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
-    public void reset() throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
+    public abstract String getBodyAsString();
 
     @Override
     public String getJMSMessageID() throws JMSException {
@@ -173,12 +44,12 @@ public class SimpleMQAbstractBytesMessage extends SimpleMQAbstractMessage implem
     }
 
     @Override
-    public void setJMSCorrelationID(String correlationID) throws JMSException {
+    public String getJMSCorrelationID() throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    public String getJMSCorrelationID() throws JMSException {
+    public void setJMSCorrelationID(String correlationID) throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
@@ -199,7 +70,7 @@ public class SimpleMQAbstractBytesMessage extends SimpleMQAbstractMessage implem
 
     @Override
     public void setJMSDestination(Destination destination) throws JMSException {
-
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -209,7 +80,7 @@ public class SimpleMQAbstractBytesMessage extends SimpleMQAbstractMessage implem
 
     @Override
     public void setJMSDeliveryMode(int deliveryMode) throws JMSException {
-
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
@@ -239,7 +110,7 @@ public class SimpleMQAbstractBytesMessage extends SimpleMQAbstractMessage implem
 
     @Override
     public void setJMSExpiration(long expiration) throws JMSException {
-
+        throw new RuntimeException("Not implemented");
     }
 
     @Override

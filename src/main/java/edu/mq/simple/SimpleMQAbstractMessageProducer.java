@@ -4,17 +4,12 @@ import jakarta.jms.*;
 
 public class SimpleMQAbstractMessageProducer implements MessageProducer {
     @Override
-    public void setDisableMessageID(boolean value) throws JMSException {
-        throw new RuntimeException("Not implemented");
-    }
-
-    @Override
     public boolean getDisableMessageID() throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
     @Override
-    public void setDisableMessageTimestamp(boolean value) throws JMSException {
+    public void setDisableMessageID(boolean value) throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
@@ -24,7 +19,7 @@ public class SimpleMQAbstractMessageProducer implements MessageProducer {
     }
 
     @Override
-    public void setDeliveryMode(int deliveryMode) throws JMSException {
+    public void setDisableMessageTimestamp(boolean value) throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
@@ -34,7 +29,7 @@ public class SimpleMQAbstractMessageProducer implements MessageProducer {
     }
 
     @Override
-    public void setPriority(int defaultPriority) throws JMSException {
+    public void setDeliveryMode(int deliveryMode) throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
@@ -44,7 +39,7 @@ public class SimpleMQAbstractMessageProducer implements MessageProducer {
     }
 
     @Override
-    public void setTimeToLive(long timeToLive) throws JMSException {
+    public void setPriority(int defaultPriority) throws JMSException {
         throw new RuntimeException("Not implemented");
     }
 
@@ -54,13 +49,18 @@ public class SimpleMQAbstractMessageProducer implements MessageProducer {
     }
 
     @Override
-    public void setDeliveryDelay(long deliveryDelay) throws JMSException {
-
+    public void setTimeToLive(long timeToLive) throws JMSException {
+        throw new RuntimeException("Not implemented");
     }
 
     @Override
     public long getDeliveryDelay() throws JMSException {
         throw new RuntimeException("Not implemented");
+    }
+
+    @Override
+    public void setDeliveryDelay(long deliveryDelay) throws JMSException {
+
     }
 
     @Override

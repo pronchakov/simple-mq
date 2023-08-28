@@ -1,8 +1,8 @@
 package edu.mq.simple;
 
 import edu.mq.simple.json.JsonToMessageMapper;
-import edu.mq.simple.message.SimpleMQBytesMessage;
-import edu.mq.simple.message.SimpleMQTextMessage;
+import edu.mq.simple.message.SimpleMQJMSMessageConverter;
+import edu.mq.simple.message.UnknownTypeException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
@@ -27,6 +27,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     @NonNull
     private Destination destination;
     private JsonToMessageMapper mapper = new JsonToMessageMapper();
+    private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
 
     public SimpleMQMessageConsumer(@NonNull SimpleMQSession session, @NonNull Destination destination) throws JMSException {
         this.session = session;
@@ -45,19 +46,15 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
             @Cleanup final FileReader fileReader = new FileReader(files[nextFileIndex]);
             final var bytes = IOUtils.toByteArray(fileReader);
             final var message = mapper.transformMessage(bytes);
-
-            var jmsMessage = switch (message.getBodyType()) {
-                case "text" -> new SimpleMQTextMessage(message.getBody());
-                case "bytes" -> new SimpleMQBytesMessage(message.getBody());
-                default -> null;
-            };
-
+            final var jmsMessage = jmsMessageConverter.convert(message);
             nextFileIndex++;
             return jmsMessage;
         } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // todo:
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // todo:
+        } catch (UnknownTypeException e) {
+            throw new RuntimeException(e); // todo:
         }
 
     }

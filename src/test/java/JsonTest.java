@@ -4,15 +4,15 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mq.simple.entity.UniversalMessage;
 import org.junit.jupiter.api.Test;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public class JsonTest {
     @Test
     public void test() throws JsonProcessingException {
-        UniversalMessage message = new UniversalMessage();
-                message.setHeaders(Map.of("k1", "v1", "k2", 12));
-        message.setBody("Test body");
+        UniversalMessage.UniversalMessageBuilder messageBuilder = UniversalMessage.builder();
+        messageBuilder.headers(Map.of("k1", "v1", "k2", 12));
+        messageBuilder.body("Test body");
+        final var message = messageBuilder.build();
 
 
         ObjectMapper mapper = new ObjectMapper();

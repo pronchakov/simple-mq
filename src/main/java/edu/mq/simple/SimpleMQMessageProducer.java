@@ -1,10 +1,10 @@
 package edu.mq.simple;
 
-import edu.mq.simple.message.SimpleMQAbstractMessage;
-import edu.mq.simple.storage.CannotSendMessageException;
 import edu.mq.simple.json.CannotTransformMessageToJSONException;
 import edu.mq.simple.json.MessageToJsonMapper;
-import edu.mq.simple.message.SimpleMQTextMessage;
+import edu.mq.simple.message.SimpleMQJMSMessageConverter;
+import edu.mq.simple.message.abstrct.SimpleMQAbstractMessage;
+import edu.mq.simple.storage.CannotSendMessageException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
@@ -22,18 +22,19 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
     @NonNull
     private Destination destination;
     private MessageToJsonMapper mapper = new MessageToJsonMapper();
+    private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
 
     @Override
     public void send(Message message) throws JMSException {
-        if (!(message instanceof SimpleMQAbstractMessage)) {
+        if (!(message instanceof final SimpleMQAbstractMessage abstractMessage)) {
             throw new JMSException("Unknown message type", "SMQ003");
         }
 
         var queue = (Queue) destination;
 
-        final var abstractMessage = (SimpleMQAbstractMessage) message;
+        final var universalMessage = jmsMessageConverter.convert(abstractMessage);
         try {
-            var text = mapper.transformMessage(abstractMessage.getMessage());
+            var text = mapper.transformMessage(universalMessage);
             session.getStorage().sendMessage(queue.getQueueName(), text);
         } catch (CannotTransformMessageToJSONException e) {
             throw new JMSException("Cannot prepare JMS message for saving", "SMQ001", e);

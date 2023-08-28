@@ -1,9 +1,9 @@
 package edu.mq.simple;
 
 import edu.mq.simple.connection.SimpleMQConnection;
+import edu.mq.simple.message.SimpleMQTextMessage;
 import edu.mq.simple.storage.FileSystemStorage;
 import edu.mq.simple.storage.Storage;
-import edu.mq.simple.message.SimpleMQTextMessage;
 import jakarta.jms.*;
 import lombok.Data;
 import lombok.NonNull;

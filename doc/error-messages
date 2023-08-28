@@ -1,0 +1,4 @@
+SMQ001 - Cannot prepare JMS message for saving
+SMQ002 - Cannot save JMS message
+SMQ003 - Unknown message type
+SMQ004 - Cannot read bytes

@@ -11,6 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SimpleMQTopic implements Topic {
     private String topicName;
+
     @Override
     public String getTopicName() throws JMSException {
         return topicName;

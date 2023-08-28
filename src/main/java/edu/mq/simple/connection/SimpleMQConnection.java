@@ -1,11 +1,10 @@
 package edu.mq.simple.connection;
 
 import edu.mq.simple.SimpleMQSession;
-import jakarta.jms.*;
+import jakarta.jms.JMSException;
+import jakarta.jms.Session;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.io.File;
 
 @Data
 @AllArgsConstructor

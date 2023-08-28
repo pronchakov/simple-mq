@@ -1,5 +1,5 @@
 import edu.mq.simple.connection.SimpleMQConnectionFactory;
-import jakarta.jms.*;
+import jakarta.jms.JMSException;
 import lombok.Cleanup;
 import org.junit.jupiter.api.Test;
 

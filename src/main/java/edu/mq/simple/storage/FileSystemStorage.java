@@ -8,9 +8,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
 
-public class FileSystemStorage implements Storage{
+public class FileSystemStorage implements Storage {
 
-    private String basePath;
+    private final String basePath;
 
     public FileSystemStorage(String basePath) {
         if (!basePath.endsWith("/")) {
@@ -26,13 +26,11 @@ public class FileSystemStorage implements Storage{
 
     @Override
     public void sendMessage(String queueName, String message) throws CannotSendMessageException {
-        final var filePath = new StringBuilder()
-                .append(basePath)
-                .append(queueName)
-                .append("/")
-                .append(new Date().getTime())
-                .append(".mq")
-                .toString();
+        final var filePath = basePath +
+                queueName +
+                "/" +
+                new Date().getTime() +
+                ".mq";
 
         final var file = new File(filePath);
         try {
