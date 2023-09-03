@@ -6,8 +6,8 @@ import edu.mq.simple.jms.destination.SimpleMQQueue;
 import edu.mq.simple.jms.message.SimpleMQBytesMessage;
 import edu.mq.simple.jms.message.SimpleMQTextMessage;
 import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
-import edu.mq.simple.storage.FileSystemStorage;
 import edu.mq.simple.storage.Storage;
+import edu.mq.simple.storage.fs.FileSystemStorage;
 import jakarta.jms.*;
 import lombok.Data;
 import lombok.NonNull;
@@ -44,7 +44,6 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
 
     @Override
     public Queue createQueue(String queueName) throws JMSException {
-        storage.createQueue(queueName);
         return new SimpleMQQueue(queueName);
     }
 

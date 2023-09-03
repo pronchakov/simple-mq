@@ -1,9 +1,9 @@
-package edu.mq.simple.storage.json;
+package edu.mq.simple.storage.fs.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import edu.mq.simple.entity.UniversalMessage;
+import edu.mq.simple.entity.SimpleMQMessage;
 
 import java.io.IOException;
 
@@ -14,15 +14,15 @@ public class JSONMessageMapper {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     }
 
-    public UniversalMessage transformMessage(byte[] message) {
+    public SimpleMQMessage transformMessage(String message) {
         try {
-            return mapper.readValue(message, UniversalMessage.class);
+            return mapper.readValue(message, SimpleMQMessage.class);
         } catch (IOException e) {
             throw new RuntimeException(e); // TODO:
         }
     }
 
-    public String transformMessage(UniversalMessage message) throws CannotTransformMessageToJSONException {
+    public String transformMessage(SimpleMQMessage message) throws CannotTransformMessageToJSONException {
         try {
             return mapper.writeValueAsString(message);
         } catch (JsonProcessingException e) {

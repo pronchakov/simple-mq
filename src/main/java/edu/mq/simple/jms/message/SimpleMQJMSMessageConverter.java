@@ -1,12 +1,12 @@
 package edu.mq.simple.jms.message;
 
-import edu.mq.simple.entity.UniversalMessage;
+import edu.mq.simple.entity.SimpleMQMessage;
 import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
 
 public class SimpleMQJMSMessageConverter {
 
-    public UniversalMessage convert(SimpleMQAbstractMessage message) {
-        final var builder = UniversalMessage.builder();
+    public SimpleMQMessage convert(SimpleMQAbstractMessage message) {
+        final var builder = SimpleMQMessage.builder();
 
         builder.bodyType(message.getType().name().toLowerCase());
         builder.body(message.getBodyAsString());
@@ -14,7 +14,7 @@ public class SimpleMQJMSMessageConverter {
         return builder.build();
     }
 
-    public SimpleMQAbstractMessage convert(UniversalMessage message) throws UnknownTypeException {
+    public SimpleMQAbstractMessage convert(SimpleMQMessage message) throws UnknownTypeException {
 
         final var type = message.getBodyType().toUpperCase();
         final var messageType = SimpleMQJMSMessageType.valueOf(type);

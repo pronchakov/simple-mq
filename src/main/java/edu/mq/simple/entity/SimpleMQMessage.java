@@ -14,7 +14,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UniversalMessage {
+public class SimpleMQMessage {
 
     @JsonProperty("headers")
     @JsonInclude

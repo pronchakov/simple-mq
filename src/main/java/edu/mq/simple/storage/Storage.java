@@ -1,12 +1,10 @@
 package edu.mq.simple.storage;
 
-import edu.mq.simple.entity.UniversalMessage;
+import edu.mq.simple.entity.SimpleMQMessage;
+import edu.mq.simple.storage.exception.CannotReadMessageException;
+import edu.mq.simple.storage.exception.CannotSendMessageException;
 
 public interface Storage {
-    String getBasePath();
-
-    void sendMessage(String queueName, UniversalMessage message) throws CannotSendMessageException;
-
-    void createQueue(String queueName);
-
+    SimpleMQMessage readMessage(String queueName) throws CannotReadMessageException;
+    void sendMessage(String queueName, SimpleMQMessage message) throws CannotSendMessageException;
 }

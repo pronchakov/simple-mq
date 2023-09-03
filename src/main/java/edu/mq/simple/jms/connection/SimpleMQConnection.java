@@ -1,5 +1,6 @@
 package edu.mq.simple.jms.connection;
 
+import edu.mq.simple.jms.connection.abstrct.SimpleMQAbstractConnection;
 import edu.mq.simple.jms.session.SimpleMQSession;
 import jakarta.jms.JMSException;
 import jakarta.jms.Session;

@@ -1,5 +1,6 @@
 package edu.mq.simple.jms.connection;
 
+import edu.mq.simple.jms.connection.abstrct.SimpleMQAbstractConnectionFactory;
 import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import lombok.Builder;
