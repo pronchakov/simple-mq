@@ -31,6 +31,30 @@ Messages saves into separate files with JSON content.
     "header1": "value1",
     "header2": 12
   },
+  "bodyType" : "text",
   "body": "Message body"
 }
 ```
+
+```json
+{
+  "headers": {
+    "header1": "value1",
+    "header2": 12
+  },
+  "bodyType" : "bytes",
+  "body": "AQID"
+}
+```
+
+### Working features
+##### Header types
+* Nope
+
+##### Message types
+* text
+* byte
+
+##### Transactions
+* Nope
+
