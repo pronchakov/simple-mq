@@ -1,16 +1,12 @@
 package edu.mq.simple.storage.fs;
 
 import edu.mq.simple.entity.SimpleMQMessage;
-import edu.mq.simple.jms.message.UnknownTypeException;
 import edu.mq.simple.storage.fs.json.CannotTransformMessageToJSONException;
 import edu.mq.simple.storage.fs.json.JSONMessageMapper;
 import edu.mq.simple.storage.Storage;
 import edu.mq.simple.storage.exception.CannotReadMessageException;
-import edu.mq.simple.storage.exception.CannotSendMessageException;
-import lombok.Cleanup;
-import org.apache.commons.io.IOUtils;
+import edu.mq.simple.storage.exception.CannotWriteMessageException;
 
-import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,12 +32,12 @@ public class FileSystemStorage implements Storage {
     }
 
     @Override
-    public void sendMessage(String queueName, SimpleMQMessage message) throws CannotSendMessageException {
+    public void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException {
         try {
             var text = jsonMapper.transformMessage(message);
             getFileSystemQueue(queueName).writeFile(text);
         } catch (CannotTransformMessageToJSONException e) {
-            throw new CannotSendMessageException("Cannot prepare JMS message for saving", e);
+            throw new CannotWriteMessageException("Cannot prepare JMS message for saving", e);
         }
 
     }

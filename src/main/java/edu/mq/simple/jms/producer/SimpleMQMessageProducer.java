@@ -4,7 +4,7 @@ import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
 import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
 import edu.mq.simple.jms.producer.abstrct.SimpleMQAbstractMessageProducer;
 import edu.mq.simple.jms.session.SimpleMQSession;
-import edu.mq.simple.storage.exception.CannotSendMessageException;
+import edu.mq.simple.storage.exception.CannotWriteMessageException;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
@@ -33,8 +33,8 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
 
         final var universalMessage = jmsMessageConverter.convert(abstractMessage);
         try {
-            session.getStorage().sendMessage(queue.getQueueName(), universalMessage);
-        } catch (CannotSendMessageException e) {
+            session.getStorage().writeMessage(queue.getQueueName(), universalMessage);
+        } catch (CannotWriteMessageException e) {
             throw new JMSException("Cannot save JMS message", "SMQ002", e);
         }
     }

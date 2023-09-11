@@ -1,3 +1,5 @@
+package edu.mq.simple.jms.producer;
+
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
 import jakarta.jms.JMSException;
 import lombok.Cleanup;

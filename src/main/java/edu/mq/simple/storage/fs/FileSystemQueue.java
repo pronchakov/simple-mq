@@ -1,6 +1,6 @@
 package edu.mq.simple.storage.fs;
 
-import edu.mq.simple.storage.exception.CannotSendMessageException;
+import edu.mq.simple.storage.exception.CannotWriteMessageException;
 import lombok.Cleanup;
 import lombok.Data;
 import org.apache.commons.io.IOUtils;
@@ -16,7 +16,8 @@ public class FileSystemQueue {
 
     private String basePath;
     private String queueName;
-    private Queue<File> files = new LinkedList();
+    private Queue<File> unreadFiles = new LinkedList<>();
+    private Queue<File> readFiles = new LinkedList<>();
 
     public FileSystemQueue(String basePath, String queueName) {
         this.basePath = basePath;
@@ -28,9 +29,8 @@ public class FileSystemQueue {
 
     public synchronized String readFile() {
         try {
-            @Cleanup final FileReader fileReader = new FileReader(files.peek(), StandardCharsets.UTF_8);
+            @Cleanup final FileReader fileReader = new FileReader(unreadFiles.poll(), StandardCharsets.UTF_8);
             final var string = IOUtils.toString(fileReader);
-            files.poll();
             return string;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e); // todo:
@@ -39,27 +39,49 @@ public class FileSystemQueue {
         }
     }
 
-    public synchronized void writeFile(String text) throws CannotSendMessageException {
-        final var filePath = basePath +
-                queueName +
-                "/" +
-                new Date().getTime() +
-                ".mq";
-
-        final var file = new File(filePath);
+    public synchronized void writeFile(String text) throws CannotWriteMessageException {
+        final var file = constructFile();
         try {
             @Cleanup final var fileWriter = new FileWriter(file);
             IOUtils.write(text, fileWriter);
-            files.add(file);
+            unreadFiles.add(file);
         }  catch (IOException e) {
-            throw new CannotSendMessageException("ERROR: cannot write to file " + file.getAbsolutePath() + ": " + e.getMessage(), e);
+            throw new CannotWriteMessageException("ERROR: cannot write to file " + file.getAbsolutePath() + ": " + e.getMessage(), e);
         }
+    }
+
+    private File constructFile() {
+        final var time = new Date().getTime();
+        var index = 0L;
+
+        var filePath = constructFileName(time, index);
+        var file = new File(filePath);
+
+        while (file.exists()) {
+            filePath = constructFileName(time, index);
+            file = new File(filePath);
+
+            index++;
+        }
+        return file;
+    }
+
+    private String constructFileName(long time, long index) {
+        return new StringBuilder()
+                .append(basePath)
+                .append(queueName)
+                .append("/")
+                .append(time)
+                .append(".")
+                .append(String.format("%06d", index))
+                .append(".mq")
+                .toString();
     }
 
     private void readExistingFilesData(File queueDir) {
         final var listFiles = queueDir.listFiles((dir1, name) -> name.endsWith(".smq"));
         for (File file : listFiles) {
-            files.add(file);
+            unreadFiles.add(file);
         }
     }
 

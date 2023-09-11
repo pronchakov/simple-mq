@@ -1,3 +1,5 @@
+package edu.mq.simple.jms.consumer;
+
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
 import io.github.pronchakov.sf.Str;
 import jakarta.jms.BytesMessage;
