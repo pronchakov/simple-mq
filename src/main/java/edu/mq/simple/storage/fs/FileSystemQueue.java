@@ -14,6 +14,7 @@ import java.util.Queue;
 @Data
 public class FileSystemQueue {
 
+    private final File queueDir;
     private String basePath;
     private String queueName;
     private Queue<File> unreadFiles = new LinkedList<>();
@@ -23,13 +24,18 @@ public class FileSystemQueue {
         this.basePath = basePath;
         this.queueName = queueName;
 
-        final File queueDir = ensureDirExists(basePath, queueName);
+        queueDir = ensureDirExists(basePath, queueName);
         readExistingFilesData(queueDir);
     }
 
     public synchronized String readFile() {
         try {
-            @Cleanup final FileReader fileReader = new FileReader(unreadFiles.poll(), StandardCharsets.UTF_8);
+            var nextFileToRead = unreadFiles.poll();
+            if (nextFileToRead == null) {
+                readExistingFilesData(queueDir);
+                nextFileToRead = unreadFiles.poll();
+            }
+            @Cleanup final FileReader fileReader = new FileReader(nextFileToRead, StandardCharsets.UTF_8);
             final var string = IOUtils.toString(fileReader);
             return string;
         } catch (FileNotFoundException e) {

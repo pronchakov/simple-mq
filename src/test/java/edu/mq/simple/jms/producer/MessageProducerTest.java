@@ -31,9 +31,9 @@ public class MessageProducerTest {
 
     @BeforeEach
     public void after() throws JMSException {
-        connection.close();
-        session.close();
         producer.close();
+        session.close();
+        connection.close();
         TestUtils.deleteQueue("./db", "edu.queue.q1");
     }
 

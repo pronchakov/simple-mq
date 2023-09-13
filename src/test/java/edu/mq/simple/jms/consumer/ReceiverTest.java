@@ -1,40 +1,73 @@
 package edu.mq.simple.jms.consumer;
 
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
-import io.github.pronchakov.sf.Str;
-import jakarta.jms.BytesMessage;
-import jakarta.jms.JMSException;
-import jakarta.jms.TextMessage;
-import lombok.Cleanup;
+import edu.mq.simple.test.TestUtils;
+import jakarta.jms.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HexFormat;
 
 public class ReceiverTest {
 
-    @Test
-    public void receiverTest() throws JMSException {
-        final var connectionFactory = SimpleMQConnectionFactory.builder()
+    private SimpleMQConnectionFactory connectionFactory;
+    private Connection connection;
+    private Session session;
+    private Queue queue;
+    private MessageConsumer consumer;
+
+    @BeforeEach
+    @AfterEach
+    public void before() throws JMSException {
+        TestUtils.deleteQueue("./db", "edu.queue.q1");
+        connectionFactory = SimpleMQConnectionFactory.builder()
                 .baseDir("./db")
                 .build();
-        @Cleanup final var connection = connectionFactory.createConnection();
-        @Cleanup final var session = connection.createSession();
-        final var queue = session.createQueue("edu.queue.q1");
-        @Cleanup final var consumer = session.createConsumer(queue);
+        connection = connectionFactory.createConnection();
+        session = connection.createSession();
+        queue = session.createQueue("edu.queue.q1");
+        consumer = session.createConsumer(queue);
+    }
 
-        for (int i = 0; i < 2; i++) {
-            final var message = consumer.receive();
+    @BeforeEach
+    public void after() throws JMSException {
+        consumer.close();
+        session.close();
+        connection.close();
+        TestUtils.deleteQueue("./db", "edu.queue.q1");
+    }
 
-            if (message instanceof TextMessage textMessage) {
-                System.out.println(Str.fmt("Text message: {}", textMessage.getText()));
-            } else if (message instanceof BytesMessage bytesMessage) {
-                final var bodyLength = bytesMessage.getBodyLength();
-                final var bytes = new byte[(int) bodyLength];
-                bytesMessage.readBytes(bytes);
-                System.out.println(Str.fmt("Bytes message: {}", HexFormat.of().withDelimiter(" ").withPrefix("0x").withUpperCase().formatHex(bytes)));
-            }
-        }
+    @Test
+    public void tesReceiveTextMessage() throws JMSException {
+        TestUtils.putMessage("./db", "edu.queue.q1", """
+                {
+                  "headers" : null,
+                  "bodyType" : "text",
+                  "body" : "Hello World"
+                }""");
 
+        final var message = consumer.receive();
+        Assertions.assertTrue(message instanceof TextMessage);
+        final var textMessage = (TextMessage) message;
+        Assertions.assertEquals("Hello World", textMessage.getText());
+    }
+
+    @Test
+    public void tesReceiveBytesMessage() throws JMSException {
+        TestUtils.putMessage("./db", "edu.queue.q1", """
+                {
+                  "headers" : null,
+                  "bodyType" : "bytes",
+                  "body" : "AQID"
+                }""");
+
+        final var message = consumer.receive();
+        Assertions.assertTrue(message instanceof BytesMessage);
+        final var bytesMessage = (BytesMessage) message;
+        Assertions.assertEquals(3, bytesMessage.getBodyLength());
+        final var bytesArray = new byte[3];
+        bytesMessage.readBytes(bytesArray);
+        Assertions.assertArrayEquals(new byte[]{0x01, 0x02, 0x03}, bytesArray);
     }
 
 }
