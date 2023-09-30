@@ -31,6 +31,15 @@ public class ConsumeProducedMessagesTest {
         Assertions.assertEquals("hello-2", ((TextMessage) consumer.receive()).getText());
         Assertions.assertEquals("hello-3", ((TextMessage) consumer.receive()).getText());
 
+        producer.send(session.createTextMessage("hello-4"));
+        producer.send(session.createTextMessage("hello-5"));
+        producer.send(session.createTextMessage("hello-6"));
+
+        Assertions.assertEquals("hello-4", ((TextMessage) consumer.receive()).getText());
+        Assertions.assertEquals("hello-5", ((TextMessage) consumer.receive()).getText());
+        Assertions.assertEquals("hello-6", ((TextMessage) consumer.receive()).getText());
+
+
         TestUtils.deleteQueue("./db", "edu.queue.consume-produced");
     }
 
