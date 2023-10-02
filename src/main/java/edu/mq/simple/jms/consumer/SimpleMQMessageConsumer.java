@@ -26,10 +26,33 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
 
     @Override
-    public Message receive() throws JMSException {
+    public Message receive() throws JMSException { // TODO: wrong implementation. add waiting
         final SimpleMQMessage simpleMQMessage;
         try {
             simpleMQMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            if (simpleMQMessage == null) {
+                return null;
+            }
+        } catch (CannotReadMessageException e) {
+            throw new RuntimeException(e); // todo:
+        }
+        final SimpleMQAbstractMessage jmsMessage;
+        try {
+            jmsMessage = jmsMessageConverter.convert(simpleMQMessage);
+        } catch (UnknownTypeException e) {
+            throw new RuntimeException(e); // todo:
+        }
+        return  jmsMessage;
+    }
+
+    @Override
+    public Message receiveNoWait() throws JMSException {
+        final SimpleMQMessage simpleMQMessage;
+        try {
+            simpleMQMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            if (simpleMQMessage == null) {
+                return null;
+            }
         } catch (CannotReadMessageException e) {
             throw new RuntimeException(e); // todo:
         }

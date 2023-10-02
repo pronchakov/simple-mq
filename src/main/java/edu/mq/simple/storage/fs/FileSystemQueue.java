@@ -32,8 +32,7 @@ public class FileSystemQueue {
         try {
             var nextFileToRead = unreadFiles.poll();
             if (nextFileToRead == null) {
-                readExistingFilesData(queueDir);
-                nextFileToRead = unreadFiles.poll();
+                return null;
             }
             @Cleanup final FileReader fileReader = new FileReader(nextFileToRead, StandardCharsets.UTF_8);
             final var string = IOUtils.toString(fileReader);
@@ -80,7 +79,7 @@ public class FileSystemQueue {
                 .append(time)
                 .append(".")
                 .append(String.format("%06d", index))
-                .append(".mq")
+                .append(".smq")
                 .toString();
     }
 

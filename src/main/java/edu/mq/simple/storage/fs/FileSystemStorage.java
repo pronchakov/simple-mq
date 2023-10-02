@@ -27,6 +27,9 @@ public class FileSystemStorage implements Storage {
     @Override
     public SimpleMQMessage readMessage(String queueName) throws CannotReadMessageException {
         final var text = getFileSystemQueue(queueName).readFile();
+        if (text == null) {
+            return null;
+        }
         final var simpleMQMessage = jsonMapper.transformMessage(text);
         return simpleMQMessage;
     }
