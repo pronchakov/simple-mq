@@ -50,6 +50,8 @@ public class ReceiverTest {
         Assertions.assertTrue(message instanceof TextMessage);
         final var textMessage = (TextMessage) message;
         Assertions.assertEquals("Hello World", textMessage.getText());
+
+        Assertions.assertNull(consumer.receiveNoWait());
     }
 
     @Test
@@ -68,6 +70,8 @@ public class ReceiverTest {
         final var bytesArray = new byte[3];
         bytesMessage.readBytes(bytesArray);
         Assertions.assertArrayEquals(new byte[]{0x01, 0x02, 0x03}, bytesArray);
+
+        Assertions.assertNull(consumer.receiveNoWait());
     }
 
 }

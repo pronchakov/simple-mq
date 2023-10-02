@@ -15,6 +15,10 @@ public class TestUtils {
         FileUtils.deleteDirectory(new File(baseDir + "/" + queueName));
     }
 
+    public static long messageCount(String baseDir, String queueName) {
+        return new File(baseDir + "/" + queueName).list().length;
+    }
+
     @SneakyThrows
     public static String readMessage(String baseDir, String queueName) {
         final var file = new File(baseDir + "/" + queueName).listFiles()[0];

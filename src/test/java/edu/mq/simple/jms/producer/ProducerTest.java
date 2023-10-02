@@ -38,6 +38,8 @@ public class ProducerTest {
         final var textMessage = session.createTextMessage("Hello World");
         producer.send(textMessage);
 
+        Assertions.assertEquals(1, TestUtils.messageCount("./db", "edu.queue.q1"));
+
         Assertions.assertEquals("""
                 {
                   "headers" : null,
@@ -51,6 +53,8 @@ public class ProducerTest {
         final var bytesMessage = session.createBytesMessage();
         bytesMessage.writeBytes(new byte[]{0x01, 0x02, 0x03});
         producer.send(bytesMessage);
+
+        Assertions.assertEquals(1, TestUtils.messageCount("./db", "edu.queue.q1"));
 
         Assertions.assertEquals("""
                 {
