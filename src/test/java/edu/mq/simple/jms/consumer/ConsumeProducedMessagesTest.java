@@ -39,6 +39,7 @@ public class ConsumeProducedMessagesTest {
         Assertions.assertEquals("hello-5", ((TextMessage) consumer.receive()).getText());
         Assertions.assertEquals("hello-6", ((TextMessage) consumer.receive()).getText());
 
+        Assertions.assertNull(consumer.receiveNoWait());
 
         TestUtils.deleteQueue("./db", "edu.queue.consume-produced");
     }
