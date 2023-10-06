@@ -25,6 +25,6 @@ public class SimpleMQMessage {
     private String bodyType;
     @JsonProperty("body")
     @JsonInclude
-    private String body;
+    private Object body;
 
 }

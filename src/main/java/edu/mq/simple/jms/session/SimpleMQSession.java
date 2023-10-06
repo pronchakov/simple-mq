@@ -5,6 +5,7 @@ import edu.mq.simple.jms.consumer.SimpleMQMessageConsumer;
 import edu.mq.simple.jms.destination.SimpleMQQueue;
 import edu.mq.simple.jms.message.SimpleMQBytesMessage;
 import edu.mq.simple.jms.message.SimpleMQTextMessage;
+import edu.mq.simple.jms.message.SimpleMQMapMessage;
 import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
 import edu.mq.simple.storage.Storage;
 import edu.mq.simple.storage.fs.FileSystemStorage;
@@ -30,6 +31,11 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
     @Override
     public TextMessage createTextMessage(String text) throws JMSException {
         return new SimpleMQTextMessage(text);
+    }
+
+    @Override
+    public MapMessage createMapMessage() throws JMSException {
+        return new SimpleMQMapMessage();
     }
 
     @Override

@@ -11,7 +11,7 @@ public abstract class SimpleMQAbstractMessage implements Message {
 
     public abstract SimpleMQJMSMessageType getType();
 
-    public abstract String getBodyAsString();
+    public abstract Object getData();
 
     @Override
     public String getJMSMessageID() throws JMSException {

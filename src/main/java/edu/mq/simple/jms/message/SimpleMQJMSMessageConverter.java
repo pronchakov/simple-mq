@@ -9,7 +9,7 @@ public class SimpleMQJMSMessageConverter {
         final var builder = SimpleMQMessage.builder();
 
         builder.bodyType(message.getType().name().toLowerCase());
-        builder.body(message.getBodyAsString());
+        builder.body(message.getData());
 
         return builder.build();
     }
@@ -19,8 +19,8 @@ public class SimpleMQJMSMessageConverter {
         final var type = message.getBodyType().toUpperCase();
         final var messageType = SimpleMQJMSMessageType.valueOf(type);
         var result = switch (messageType) {
-            case TEXT -> new SimpleMQTextMessage(message.getBody());
-            case BYTES -> SimpleMQBytesMessage.forReceive(message.getBody());
+            case TEXT -> new SimpleMQTextMessage((String) message.getBody());
+            case BYTES -> SimpleMQBytesMessage.forReceive((String) message.getBody());
             default -> throw new UnknownTypeException(type);
         };
 

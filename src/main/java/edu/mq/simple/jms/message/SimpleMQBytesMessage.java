@@ -56,7 +56,7 @@ public class SimpleMQBytesMessage extends SimpleMQAbstractBytesMessage {
     }
 
     @Override
-    public String getBodyAsString() {
+    public String getData() {
         final var bytes = os.toByteArray();
         final var base64Bytes = Base64.getEncoder().encodeToString(bytes);
         return base64Bytes;

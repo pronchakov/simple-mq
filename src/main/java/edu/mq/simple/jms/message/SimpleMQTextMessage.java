@@ -22,7 +22,7 @@ public class SimpleMQTextMessage extends SimpleMQAbstractTextMessage {
     }
 
     @Override
-    public String getBodyAsString() {
+    public String getData() {
         return text;
     }
 
