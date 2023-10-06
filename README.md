@@ -55,6 +55,9 @@ Messages saves into separate files with JSON content.
 * text
 * byte
 
+##### Acknowledgement
+* Nope
+
 ##### Transactions
 * Nope
 
