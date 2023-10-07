@@ -91,56 +91,56 @@ public class ProducerTest {
                   "headers" : null,
                   "bodyType" : "map",
                   "body" : {
-                    "boolentry": {
-                        "type": "boolean",
-                        "value": true
+                    "boolentry" : {
+                      "type" : "boolean",
+                      "value" : true
                     },
-                    "byteentry": {
-                        "type": "byte",
-                        "value": "/Q==",
+                    "byteentry" : {
+                      "type" : "byte",
+                      "value" : "/Q=="
                     },
-                    "bytesentry": {
-                        "type": "bytes",
-                        "value": "AQID",
+                    "bytesentry" : {
+                      "type" : "bytes",
+                      "value" : "AQID"
                     },
-                    "byteslimentry": {
-                        "type": "bytes",
-                        "value": "AgM=",
+                    "byteslimentry" : {
+                      "type" : "bytes",
+                      "value" : "AgM="
                     },
-                    "charentry": {
-                        "type": "char",
-                        "value": "c",
+                    "charentry" : {
+                      "type" : "character",
+                      "value" : "c"
                     },
-                    "dblentry": {
-                        "type": "double",
-                        "value": 1.7976931348623157E308,
+                    "dblentry" : {
+                      "type" : "double",
+                      "value" : 1.7976931348623157E308
                     },
-                    "fltentry": {
-                        "type": "float",
-                        "value": 3.4028235E38,
+                    "fltentry" : {
+                      "type" : "float",
+                      "value" : 3.4028235E38
                     },
-                    "intentry": {
-                        "type": "int",
-                        "value": 2147483647,
+                    "intentry" : {
+                      "type" : "integer",
+                      "value" : 2147483647
                     },
-                    "longentry": {
-                        "type": "long",
-                        "value": 9223372036854775807,
+                    "longentry" : {
+                      "type" : "long",
+                      "value" : 9223372036854775807
                     },
-                    "shortentry": {
-                        "type": "short",
-                        "value": 32767,
+                    "objentry" : {
+                      "type" : "object[edu.mq.simple.jms.producer.ProducerTest.TestPoint]",
+                      "value" : {
+                        "x" : 34,
+                        "y" : 76
+                      }
                     },
-                    "strentry": {
-                        "type": "string",
-                        "value": "hello world"
+                    "shortentry" : {
+                      "type" : "short",
+                      "value" : 32767
                     },
-                    "objentry": {
-                        "type": "object[edu.mq.simple.jms.producer.ProducerTest.TestPoint]",
-                        "value": {
-                            "x" : 34,
-                            "y" : 76
-                        }
+                    "strentry" : {
+                      "type" : "string",
+                      "value" : "hello world"
                     }
                   }
                 }""", TestUtils.readMessage("./db", "edu.queue.q1"));

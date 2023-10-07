@@ -1,11 +1,10 @@
 package edu.mq.simple.jms.message;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMapMessage;
 import jakarta.jms.JMSException;
-import lombok.SneakyThrows;
+import lombok.*;
 
+import java.util.Base64;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -21,7 +20,26 @@ public class SimpleMQMapMessage extends SimpleMQAbstractMapMessage {
     @SneakyThrows
     @Override
     public Object getData() {
-        return map;
+        TreeMap<String, MapElement> result = new TreeMap<>();
+        for (Map.Entry<String, Object> entry : map.entrySet()) {
+            var value = entry.getValue();
+            var type = value.getClass().getSimpleName().toLowerCase();
+
+            type = switch (type) {
+                case "byte[]" -> "bytes";
+                case "boolean", "byte", "character", "double", "float", "integer", "long", "short", "string" -> type;
+                default -> "object[" + value.getClass().getCanonicalName() + "]";
+            };
+
+            value = switch (type) {
+                case "byte" -> Base64.getEncoder().encodeToString(new byte[]{(byte) value});
+                default -> value;
+            };
+
+            final var mapElement = new MapElement(type, value);
+            result.put(entry.getKey(), mapElement);
+        }
+        return result;
     }
 
     @Override
@@ -84,5 +102,14 @@ public class SimpleMQMapMessage extends SimpleMQAbstractMapMessage {
     @Override
     public void setObject(String name, Object value) throws JMSException {
         map.put(name, value);
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    private class MapElement<T> {
+        private String type;
+        private T value;
     }
 }
