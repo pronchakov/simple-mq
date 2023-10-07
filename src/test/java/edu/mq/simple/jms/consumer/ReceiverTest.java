@@ -120,7 +120,7 @@ public class ReceiverTest {
                       "value" : 9223372036854775807
                     },
                     "objentry" : {
-                      "type" : "object[edu.mq.simple.jms.producer.ProducerTest.TestPoint]",
+                      "type" : "object[edu.mq.simple.util.TestPoint]",
                       "value" : {
                         "x" : 34,
                         "y" : 76
@@ -142,10 +142,9 @@ public class ReceiverTest {
         final var mapMessage = (MapMessage) message;
 
         Assertions.assertEquals(true, mapMessage.getBoolean("boolentry"));
-
         Assertions.assertEquals((byte) 0xFD, mapMessage.getByte("byteentry"));
         Assertions.assertArrayEquals(new byte[] {0x01, 0x02, 0x03}, mapMessage.getBytes("bytesentry"));
-        Assertions.assertArrayEquals(new byte[] {0x01, 0x02, 0x03, 0x04}, mapMessage.getBytes("byteslimentry"));
+        Assertions.assertArrayEquals(new byte[] {0x02, 0x03}, mapMessage.getBytes("byteslimentry"));
         Assertions.assertEquals('c', mapMessage.getChar("charentry"));
         Assertions.assertEquals(Double.MAX_VALUE, mapMessage.getDouble("dblentry"));
         Assertions.assertEquals(Float.MAX_VALUE, mapMessage.getFloat("fltentry"));

@@ -36,6 +36,12 @@
             <version>2.13.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
+
         <!-- Miscellaneous -->
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -1,14 +1,12 @@
 package edu.mq.simple.util;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode
 @AllArgsConstructor
+@NoArgsConstructor
 public class TestPoint {
     private int x;
     private int y;
