@@ -2,10 +2,8 @@ package edu.mq.simple.jms.producer;
 
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
 import edu.mq.simple.test.TestUtils;
+import edu.mq.simple.util.TestPoint;
 import jakarta.jms.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
 import org.junit.jupiter.api.*;
 
 public class ProducerTest {
@@ -128,7 +126,7 @@ public class ProducerTest {
                       "value" : 9223372036854775807
                     },
                     "objentry" : {
-                      "type" : "object[edu.mq.simple.jms.producer.ProducerTest.TestPoint]",
+                      "type" : "object[edu.mq.simple.util.TestPoint]",
                       "value" : {
                         "x" : 34,
                         "y" : 76
@@ -144,14 +142,6 @@ public class ProducerTest {
                     }
                   }
                 }""", TestUtils.readMessage("./db", "edu.queue.q1"));
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    static class TestPoint {
-        private int x;
-        private int y;
     }
 
 }
