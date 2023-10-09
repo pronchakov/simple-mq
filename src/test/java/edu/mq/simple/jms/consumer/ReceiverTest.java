@@ -1,7 +1,6 @@
 package edu.mq.simple.jms.consumer;
 
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
-import edu.mq.simple.jms.producer.ProducerTest;
 import edu.mq.simple.test.TestUtils;
 import edu.mq.simple.util.TestPoint;
 import jakarta.jms.*;
@@ -143,8 +142,8 @@ public class ReceiverTest {
 
         Assertions.assertEquals(true, mapMessage.getBoolean("boolentry"));
         Assertions.assertEquals((byte) 0xFD, mapMessage.getByte("byteentry"));
-        Assertions.assertArrayEquals(new byte[] {0x01, 0x02, 0x03}, mapMessage.getBytes("bytesentry"));
-        Assertions.assertArrayEquals(new byte[] {0x02, 0x03}, mapMessage.getBytes("byteslimentry"));
+        Assertions.assertArrayEquals(new byte[]{0x01, 0x02, 0x03}, mapMessage.getBytes("bytesentry"));
+        Assertions.assertArrayEquals(new byte[]{0x02, 0x03}, mapMessage.getBytes("byteslimentry"));
         Assertions.assertEquals('c', mapMessage.getChar("charentry"));
         Assertions.assertEquals(Double.MAX_VALUE, mapMessage.getDouble("dblentry"));
         Assertions.assertEquals(Float.MAX_VALUE, mapMessage.getFloat("fltentry"));

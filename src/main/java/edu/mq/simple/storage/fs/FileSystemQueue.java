@@ -28,6 +28,12 @@ public class FileSystemQueue {
         readExistingFilesData(queueDir);
     }
 
+    private static File ensureDirExists(String basePath, String queueName) {
+        final var queueDir = new File(basePath + queueName);
+        queueDir.mkdirs();
+        return queueDir;
+    }
+
     public synchronized String readFile() {
         try {
             var nextFileToRead = unreadFiles.poll();
@@ -50,7 +56,7 @@ public class FileSystemQueue {
             @Cleanup final var fileWriter = new FileWriter(file);
             IOUtils.write(text, fileWriter);
             unreadFiles.add(file);
-        }  catch (IOException e) {
+        } catch (IOException e) {
             throw new CannotWriteMessageException("ERROR: cannot write to file " + file.getAbsolutePath() + ": " + e.getMessage(), e);
         }
     }
@@ -88,11 +94,5 @@ public class FileSystemQueue {
         for (File file : listFiles) {
             unreadFiles.add(file);
         }
-    }
-
-    private static File ensureDirExists(String basePath, String queueName) {
-        final var queueDir = new File(basePath + queueName);
-        queueDir.mkdirs();
-        return queueDir;
     }
 }

@@ -48,16 +48,22 @@ Messages saves into separate files with JSON content.
 ```
 
 ### Working features
+
 ##### Header types
+
 * Nope
 
 ##### Message types
+
 * text
 * byte
+* map
 
 ##### Acknowledgement
+
 * Nope
 
 ##### Transactions
+
 * Nope
 

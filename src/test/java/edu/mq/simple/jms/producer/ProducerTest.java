@@ -4,7 +4,10 @@ import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
 import edu.mq.simple.test.TestUtils;
 import edu.mq.simple.util.TestPoint;
 import jakarta.jms.*;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ProducerTest {
 
@@ -70,8 +73,8 @@ public class ProducerTest {
         final var mapMessage = session.createMapMessage();
         mapMessage.setBoolean("boolentry", true);
         mapMessage.setByte("byteentry", (byte) 0xFD);
-        mapMessage.setBytes("bytesentry", new byte[] {0x01, 0x02, 0x03});
-        mapMessage.setBytes("byteslimentry", new byte[] {0x01, 0x02, 0x03, 0x04}, 1, 2);
+        mapMessage.setBytes("bytesentry", new byte[]{0x01, 0x02, 0x03});
+        mapMessage.setBytes("byteslimentry", new byte[]{0x01, 0x02, 0x03, 0x04}, 1, 2);
         mapMessage.setChar("charentry", 'c');
         mapMessage.setDouble("dblentry", Double.MAX_VALUE);
         mapMessage.setFloat("fltentry", Float.MAX_VALUE);

@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -17,12 +16,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class MultipleConsumersTest {
+
+    @SneakyThrows
+    private static Stream<? extends String> apply(CompletableFuture completableFuture) {
+        return ((List<String>) completableFuture.get()).stream();
+    }
 
     @SneakyThrows
     @Test
@@ -92,11 +95,6 @@ public class MultipleConsumersTest {
 
             return result;
         }
-    }
-
-    @SneakyThrows
-    private static Stream<? extends String> apply(CompletableFuture completableFuture) {
-        return ((List<String>) completableFuture.get()).stream();
     }
 
 }

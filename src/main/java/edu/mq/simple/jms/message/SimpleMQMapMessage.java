@@ -13,11 +13,6 @@ public class SimpleMQMapMessage extends SimpleMQAbstractMapMessage {
 
     private Map<String, Object> map = new TreeMap<>();
 
-    @Override
-    public SimpleMQJMSMessageType getType() {
-        return SimpleMQJMSMessageType.MAP;
-    }
-
     public SimpleMQMapMessage() {
     }
 
@@ -64,6 +59,11 @@ public class SimpleMQMapMessage extends SimpleMQAbstractMapMessage {
         }
     }
 
+    @Override
+    public SimpleMQJMSMessageType getType() {
+        return SimpleMQJMSMessageType.MAP;
+    }
+
     @SneakyThrows
     @Override
     public Object getData() {
@@ -88,7 +88,6 @@ public class SimpleMQMapMessage extends SimpleMQAbstractMapMessage {
         }
         return result;
     }
-
 
 
     @Override

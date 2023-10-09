@@ -42,7 +42,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
         } catch (UnknownTypeException e) {
             throw new RuntimeException(e); // todo:
         }
-        return  jmsMessage;
+        return jmsMessage;
     }
 
     @Override
@@ -62,7 +62,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
         } catch (UnknownTypeException e) {
             throw new RuntimeException(e); // todo:
         }
-        return  jmsMessage;
+        return jmsMessage;
     }
 
     @Override

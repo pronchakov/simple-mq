@@ -6,5 +6,6 @@ import edu.mq.simple.storage.exception.CannotWriteMessageException;
 
 public interface Storage {
     SimpleMQMessage readMessage(String queueName) throws CannotReadMessageException;
+
     void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException;
 }

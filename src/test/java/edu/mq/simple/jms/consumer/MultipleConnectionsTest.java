@@ -20,6 +20,11 @@ import java.util.stream.Stream;
 public class MultipleConnectionsTest {
 
     @SneakyThrows
+    private static Stream<? extends String> apply(CompletableFuture completableFuture) {
+        return ((List<String>) completableFuture.get()).stream();
+    }
+
+    @SneakyThrows
     @Test
     public void testMultipleConnections() {
         TestUtils.deleteQueue("./db", "edu.queue.multiple-connections");
@@ -81,11 +86,6 @@ public class MultipleConnectionsTest {
 
             return result;
         }
-    }
-
-    @SneakyThrows
-    private static Stream<? extends String> apply(CompletableFuture completableFuture) {
-        return ((List<String>) completableFuture.get()).stream();
     }
 
 }
