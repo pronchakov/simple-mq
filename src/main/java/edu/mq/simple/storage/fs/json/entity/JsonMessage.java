@@ -1,30 +1,25 @@
-package edu.mq.simple.entity;
+package edu.mq.simple.storage.fs.json.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SimpleMQMessage {
+public class JsonMessage {
 
     @JsonProperty("headers")
-    @JsonInclude
-    private Map<String, Object> headers;
-
-    @JsonProperty("bodyType")
-    @JsonInclude
-    private String bodyType;
+    private List<JsonHeader> headers;
+    @JsonProperty("type")
+    private String type;
     @JsonProperty("body")
-    @JsonInclude
     private Object body;
 
 }

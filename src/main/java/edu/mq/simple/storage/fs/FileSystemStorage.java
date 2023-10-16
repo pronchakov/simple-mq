@@ -1,11 +1,10 @@
 package edu.mq.simple.storage.fs;
 
-import edu.mq.simple.entity.SimpleMQMessage;
+import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.storage.Storage;
 import edu.mq.simple.storage.exception.CannotReadMessageException;
 import edu.mq.simple.storage.exception.CannotWriteMessageException;
-import edu.mq.simple.storage.fs.json.CannotTransformMessageToJSONException;
-import edu.mq.simple.storage.fs.json.JSONMessageMapper;
+import edu.mq.simple.storage.fs.json.JsonFileFormat;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +12,7 @@ import java.util.Map;
 public class FileSystemStorage implements Storage {
 
     private final String basePath;
-    private JSONMessageMapper jsonMapper = new JSONMessageMapper();
+    private FileFormat fileFormat = new JsonFileFormat();
     private Map<String, FileSystemQueue> queues = new HashMap<>();
 
 
@@ -30,19 +29,15 @@ public class FileSystemStorage implements Storage {
         if (text == null) {
             return null;
         }
-        final var simpleMQMessage = jsonMapper.transformMessage(text);
-        return simpleMQMessage;
+
+        final var message = fileFormat.transformTextToMessage(text);
+        return message;
     }
 
     @Override
     public void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException {
-        try {
-            var text = jsonMapper.transformMessage(message);
-            getFileSystemQueue(queueName).writeFile(text);
-        } catch (CannotTransformMessageToJSONException e) {
-            throw new CannotWriteMessageException("Cannot prepare JMS message for saving", e);
-        }
-
+        final var text = fileFormat.transformMessageToText(message);
+        getFileSystemQueue(queueName).writeFile(text);
     }
 
     private FileSystemQueue getFileSystemQueue(String queueName) {

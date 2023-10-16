@@ -47,7 +47,7 @@ public class ProducerTest {
         Assertions.assertEquals("""
                 {
                   "headers" : null,
-                  "bodyType" : "text",
+                  "type" : "text",
                   "body" : "Hello World"
                 }""", TestUtils.readMessage("./db", "edu.queue.q1"));
     }
@@ -63,7 +63,7 @@ public class ProducerTest {
         Assertions.assertEquals("""
                 {
                   "headers" : null,
-                  "bodyType" : "bytes",
+                  "type" : "bytes",
                   "body" : "AQID"
                 }""", TestUtils.readMessage("./db", "edu.queue.q1"));
     }
@@ -90,7 +90,7 @@ public class ProducerTest {
         Assertions.assertEquals("""
                 {
                   "headers" : null,
-                  "bodyType" : "map",
+                  "type" : "map",
                   "body" : {
                     "boolentry" : {
                       "type" : "boolean",

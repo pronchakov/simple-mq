@@ -1,10 +1,6 @@
 package edu.mq.simple.jms.consumer;
 
-import edu.mq.simple.entity.SimpleMQMessage;
-import edu.mq.simple.jms.consumer.abstrct.SimpleMQAbstractMessageConsumer;
-import edu.mq.simple.jms.message.SimpleMQJMSMessageConverter;
-import edu.mq.simple.jms.message.UnknownTypeException;
-import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractMessage;
+import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.jms.session.SimpleMQSession;
 import edu.mq.simple.storage.exception.CannotReadMessageException;
 import jakarta.jms.Destination;
@@ -23,23 +19,15 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     @NonNull
     private Destination destination;
 
-    private SimpleMQJMSMessageConverter jmsMessageConverter = new SimpleMQJMSMessageConverter();
-
     @Override
     public Message receive() throws JMSException { // TODO: wrong implementation. add waiting
-        final SimpleMQMessage simpleMQMessage;
+        final SimpleMQMessage jmsMessage;
         try {
-            simpleMQMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
-            if (simpleMQMessage == null) {
+            jmsMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            if (jmsMessage == null) {
                 return null;
             }
         } catch (CannotReadMessageException e) {
-            throw new RuntimeException(e); // todo:
-        }
-        final SimpleMQAbstractMessage jmsMessage;
-        try {
-            jmsMessage = jmsMessageConverter.convert(simpleMQMessage);
-        } catch (UnknownTypeException e) {
             throw new RuntimeException(e); // todo:
         }
         return jmsMessage;
@@ -47,22 +35,16 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
 
     @Override
     public Message receiveNoWait() throws JMSException {
-        final SimpleMQMessage simpleMQMessage;
+        final SimpleMQMessage jsonMessage;
         try {
-            simpleMQMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
-            if (simpleMQMessage == null) {
+            jsonMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            if (jsonMessage == null) {
                 return null;
             }
         } catch (CannotReadMessageException e) {
             throw new RuntimeException(e); // todo:
         }
-        final SimpleMQAbstractMessage jmsMessage;
-        try {
-            jmsMessage = jmsMessageConverter.convert(simpleMQMessage);
-        } catch (UnknownTypeException e) {
-            throw new RuntimeException(e); // todo:
-        }
-        return jmsMessage;
+        return jsonMessage;
     }
 
     @Override

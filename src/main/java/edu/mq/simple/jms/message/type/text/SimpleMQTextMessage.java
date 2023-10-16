@@ -1,29 +1,26 @@
-package edu.mq.simple.jms.message;
+package edu.mq.simple.jms.message.type.text;
 
-import edu.mq.simple.jms.message.abstrct.SimpleMQAbstractTextMessage;
+import edu.mq.simple.jms.message.SimpleMQJMSMessageType;
 import jakarta.jms.JMSException;
+import lombok.Getter;
 
 public class SimpleMQTextMessage extends SimpleMQAbstractTextMessage {
 
-    private String text;
+    @Getter
+    private String value;
 
-    public SimpleMQTextMessage(String text) {
-        this.text = text;
+    public SimpleMQTextMessage(String value) {
+        this.value = value;
     }
 
     @Override
     public String getText() throws JMSException {
-        return text;
+        return value;
     }
 
     @Override
     public void setText(String text) throws JMSException {
-        this.text = text;
-    }
-
-    @Override
-    public String getData() {
-        return text;
+        this.value = text;
     }
 
     @Override

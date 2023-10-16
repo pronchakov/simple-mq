@@ -3,9 +3,9 @@ package edu.mq.simple.jms.session;
 import edu.mq.simple.jms.connection.SimpleMQConnection;
 import edu.mq.simple.jms.consumer.SimpleMQMessageConsumer;
 import edu.mq.simple.jms.destination.SimpleMQQueue;
-import edu.mq.simple.jms.message.SimpleMQBytesMessage;
-import edu.mq.simple.jms.message.SimpleMQMapMessage;
-import edu.mq.simple.jms.message.SimpleMQTextMessage;
+import edu.mq.simple.jms.message.type.bytes.SimpleMQBytesMessage;
+import edu.mq.simple.jms.message.type.map.SimpleMQMapMessage;
+import edu.mq.simple.jms.message.type.text.SimpleMQTextMessage;
 import edu.mq.simple.jms.producer.SimpleMQMessageProducer;
 import edu.mq.simple.storage.Storage;
 import edu.mq.simple.storage.fs.FileSystemStorage;
@@ -25,7 +25,7 @@ public class SimpleMQSession extends SimpleMQAbstractSession {
 
     @Override
     public BytesMessage createBytesMessage() throws JMSException {
-        return SimpleMQBytesMessage.forSend();
+        return new SimpleMQBytesMessage();
     }
 
     @Override

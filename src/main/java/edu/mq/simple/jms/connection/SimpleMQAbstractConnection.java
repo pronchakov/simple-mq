@@ -1,4 +1,4 @@
-package edu.mq.simple.jms.connection.abstrct;
+package edu.mq.simple.jms.connection;
 
 import jakarta.jms.*;
 

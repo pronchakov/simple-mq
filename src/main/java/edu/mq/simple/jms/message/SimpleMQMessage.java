@@ -1,17 +1,19 @@
-package edu.mq.simple.jms.message.abstrct;
+package edu.mq.simple.jms.message;
 
-import edu.mq.simple.jms.message.SimpleMQJMSMessageType;
+import edu.mq.simple.jms.message.header.SimpleMQHeader;
+import edu.mq.simple.jms.message.header.SimpleMQTextHeader;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
 
 import java.util.Enumeration;
+import java.util.TreeMap;
 
-public abstract class SimpleMQAbstractMessage implements Message {
+public abstract class SimpleMQMessage implements Message {
+
+    private TreeMap<String, SimpleMQHeader<?>> headers = new TreeMap<>();
 
     public abstract SimpleMQJMSMessageType getType();
-
-    public abstract Object getData();
 
     @Override
     public String getJMSMessageID() throws JMSException {
@@ -180,7 +182,13 @@ public abstract class SimpleMQAbstractMessage implements Message {
 
     @Override
     public String getStringProperty(String name) throws JMSException {
-        throw new RuntimeException("Not implemented");
+        final Object value = headers.get(name).getValue();
+        if (value instanceof SimpleMQTextHeader textHeader) {
+            return textHeader.getValue();
+        } else {
+            // TODO: transform and return
+            throw new RuntimeException("Not implemented");
+        }
     }
 
     @Override
@@ -230,7 +238,7 @@ public abstract class SimpleMQAbstractMessage implements Message {
 
     @Override
     public void setStringProperty(String name, String value) throws JMSException {
-        throw new RuntimeException("Not implemented");
+        headers.put(name, new SimpleMQTextHeader(name, value));
     }
 
     @Override

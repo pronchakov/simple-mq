@@ -43,7 +43,7 @@ public class ReceiverTest {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
                   "headers" : null,
-                  "bodyType" : "text",
+                  "type" : "text",
                   "body" : "Hello World"
                 }""");
 
@@ -60,7 +60,7 @@ public class ReceiverTest {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
                   "headers" : null,
-                  "bodyType" : "bytes",
+                  "type" : "bytes",
                   "body" : "AQID"
                 }""");
 
@@ -80,7 +80,7 @@ public class ReceiverTest {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
                   "headers" : null,
-                  "bodyType" : "map",
+                  "type" : "map",
                   "body" : {
                     "boolentry" : {
                       "type" : "boolean",

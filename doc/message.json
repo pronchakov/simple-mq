@@ -1,7 +1,11 @@
 {
-  "headers": {
-    "header1": "value1",
-    "header2": 12
-  },
+  "headers": [
+    {
+      "name": "h1",
+      "type": "string",
+      "value": "header 1"
+    }
+  ],
+  "bodyType": "text",
   "body": "Message body"
 }

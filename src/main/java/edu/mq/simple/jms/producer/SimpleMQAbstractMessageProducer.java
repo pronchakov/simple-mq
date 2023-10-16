@@ -1,4 +1,4 @@
-package edu.mq.simple.jms.producer.abstrct;
+package edu.mq.simple.jms.producer;
 
 import jakarta.jms.*;
 

@@ -1,4 +1,4 @@
-package edu.mq.simple.jms.consumer.abstrct;
+package edu.mq.simple.jms.consumer;
 
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
