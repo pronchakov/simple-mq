@@ -25,6 +25,16 @@ public class SimpleMQBytesMessage extends SimpleMQAbstractBytesMessage {
 
     @SneakyThrows
     @Override
+    public long getBodyLength() throws JMSException {
+        if (outputStream != null) {
+            return outputStream.size();
+        } else {
+            return is.available();
+        }
+    }
+
+    @SneakyThrows
+    @Override
     public void writeBytes(byte[] value) throws JMSException {
         outputStream.writeBytes(value);
     }

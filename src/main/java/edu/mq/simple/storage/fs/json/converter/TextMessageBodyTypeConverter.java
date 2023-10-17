@@ -11,7 +11,7 @@ public class TextMessageBodyTypeConverter implements BodyTypeConverter {
     }
 
     @Override
-    public String convert(SimpleMQMessage message) {
+    public Object convert(SimpleMQMessage message) {
         return ((SimpleMQTextMessage) message).getValue();
     }
 }

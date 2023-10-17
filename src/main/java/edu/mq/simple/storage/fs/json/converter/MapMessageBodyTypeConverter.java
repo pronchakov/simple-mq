@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.jms.message.type.map.SimpleMQMapMessage;
 import edu.mq.simple.jms.message.type.map.SimpleMQMapMessageElement;
-import edu.mq.simple.jms.message.type.text.SimpleMQTextMessage;
 import edu.mq.simple.storage.fs.json.BodyTypeConverter;
 import lombok.SneakyThrows;
 import org.apache.commons.beanutils.PropertyUtils;

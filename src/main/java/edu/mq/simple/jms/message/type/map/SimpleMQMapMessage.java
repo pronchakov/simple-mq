@@ -2,10 +2,8 @@ package edu.mq.simple.jms.message.type.map;
 
 import edu.mq.simple.jms.message.SimpleMQJMSMessageType;
 import jakarta.jms.JMSException;
-import lombok.*;
-import org.apache.commons.beanutils.PropertyUtils;
+import lombok.Getter;
 
-import java.util.Base64;
 import java.util.Map;
 import java.util.TreeMap;
 

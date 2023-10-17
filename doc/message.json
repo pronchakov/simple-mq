@@ -6,6 +6,6 @@
       "value": "header 1"
     }
   ],
-  "bodyType": "text",
+  "type": "text",
   "body": "Message body"
 }

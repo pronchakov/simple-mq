@@ -4,7 +4,7 @@ import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.storage.Storage;
 import edu.mq.simple.storage.exception.CannotReadMessageException;
 import edu.mq.simple.storage.exception.CannotWriteMessageException;
-import edu.mq.simple.storage.fs.json.JsonFileFormat;
+import edu.mq.simple.storage.fs.json.JsonFileFormatter;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import java.util.Map;
 public class FileSystemStorage implements Storage {
 
     private final String basePath;
-    private FileFormat fileFormat = new JsonFileFormat();
+    private FileFormatter fileFormatter = new JsonFileFormatter();
     private Map<String, FileSystemQueue> queues = new HashMap<>();
 
 
@@ -30,13 +30,13 @@ public class FileSystemStorage implements Storage {
             return null;
         }
 
-        final var message = fileFormat.transformTextToMessage(text);
+        final var message = fileFormatter.transform(text);
         return message;
     }
 
     @Override
     public void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException {
-        final var text = fileFormat.transformMessageToText(message);
+        final var text = fileFormatter.transform(message);
         getFileSystemQueue(queueName).writeFile(text);
     }
 

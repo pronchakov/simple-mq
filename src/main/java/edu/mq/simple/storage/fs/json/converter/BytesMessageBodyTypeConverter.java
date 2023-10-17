@@ -18,7 +18,7 @@ public class BytesMessageBodyTypeConverter implements BodyTypeConverter {
     }
 
     @Override
-    public String convert(SimpleMQMessage message) {
+    public Object convert(SimpleMQMessage message) {
         final var bytes = ((SimpleMQBytesMessage) message).getOutputStream().toByteArray();
         final var base64Bytes = Base64.getEncoder().encodeToString(bytes);
         return base64Bytes;
