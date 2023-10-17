@@ -4,7 +4,7 @@ import edu.mq.simple.jms.message.SimpleMQMessage;
 
 public interface FileFormatter {
 
-    SimpleMQMessage transform(String text);
+    SimpleMQMessage toMessage(String text);
 
-    String transform(SimpleMQMessage message);
+    String toText(SimpleMQMessage message);
 }

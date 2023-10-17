@@ -1,4 +1,4 @@
-package edu.mq.simple.jms.producer;
+package edu.mq.simple.jms.consumer;
 
 import edu.mq.simple.jms.connection.SimpleMQConnectionFactory;
 import edu.mq.simple.test.TestUtils;
@@ -14,7 +14,7 @@ public class HeadersTest {
     private Connection connection;
     private Session session;
     private Queue queue;
-    private MessageProducer producer;
+    private MessageConsumer consumer;
 
     @BeforeEach
     public void before() throws JMSException {
@@ -25,26 +25,20 @@ public class HeadersTest {
         connection = connectionFactory.createConnection();
         session = connection.createSession();
         queue = session.createQueue("edu.queue.q1");
-        producer = session.createProducer(queue);
+        consumer = session.createConsumer(queue);
     }
 
     @AfterEach
     public void after() throws JMSException {
-        producer.close();
+        consumer.close();
         session.close();
         connection.close();
         TestUtils.deleteQueue("./db", "edu.queue.q1");
     }
 
-        @Test
+    @Test
     public void stringHeaderTest() throws Exception {
-        final var textMessage = session.createTextMessage("Hello World");
-        textMessage.setStringProperty("key1", "value1");
-        producer.send(textMessage);
-
-        Assertions.assertEquals(1, TestUtils.messageCount("./db", "edu.queue.q1"));
-
-        Assertions.assertEquals("""
+        TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
                   "headers" : [ {
                     "name" : "key1",
@@ -53,7 +47,15 @@ public class HeadersTest {
                   } ],
                   "type" : "text",
                   "body" : "Hello World"
-                }""", TestUtils.readMessage("./db", "edu.queue.q1"));
+                }""");
+
+
+        final var message = consumer.receiveNoWait();
+        Assertions.assertTrue(message instanceof TextMessage);
+
+        final var textMessage = (TextMessage) message;
+        final var key1Value = textMessage.getStringProperty("key1");
+        Assertions.assertEquals("value1", key1Value);
     }
 
 }

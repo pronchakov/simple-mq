@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.storage.fs.FileFormatter;
-import edu.mq.simple.storage.fs.json.entity.JsonMessage;
 import lombok.SneakyThrows;
 
 public class JsonFileFormatter implements FileFormatter {
@@ -18,8 +17,9 @@ public class JsonFileFormatter implements FileFormatter {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
     }
 
+    @SneakyThrows
     @Override
-    public SimpleMQMessage transform(String text) {
+    public SimpleMQMessage toMessage(String text) {
         try {
 
             final var jsonNode = mapper.readTree(text);
@@ -30,12 +30,23 @@ public class JsonFileFormatter implements FileFormatter {
                 default -> bodyNode.asText();
             };
 
-            final var jsonMessage = JsonMessage.builder()
-//                    .headers()
-                    .type(jsonNode.get("type").textValue())
-                    .body(body)
-                    .build();
-            final var message = bodyConverter.convertBody(jsonMessage);
+            final var type = jsonNode.get("type").textValue();
+            final var message = bodyConverter.toMessage(type, body);
+
+            final var headers = jsonNode.get("headers");
+            for (JsonNode header : headers) {
+                final var name = header.get("name").textValue();
+                final var hType = header.get("type").textValue();
+                var value = header.get("value").textValue();
+                switch (hType) {
+                    // todo: add data types
+                    case "string": {
+                        message.setStringProperty(name, value);
+                    }
+                };
+
+            }
+
             return message;
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -44,20 +55,21 @@ public class JsonFileFormatter implements FileFormatter {
 
     @SneakyThrows
     @Override
-    public String transform(SimpleMQMessage message) {
-
-        final var body = bodyConverter.convertBody(message);
+    public String toText(SimpleMQMessage message) {
+        final var body = bodyConverter.toObject(message);
 
         final var objectNode = mapper.createObjectNode();
-        objectNode.put("headers", mapper.nullNode());
+        final var headersNode = mapper.createArrayNode();
+        message.getHeaders().forEach((name, simpleHeader) -> {
+            final var headerNode = mapper.createObjectNode();
+            headerNode.put("name", simpleHeader.getName());
+            headerNode.put("type", simpleHeader.getType());
+            headerNode.put("value", simpleHeader.getValue().toString()); // todo: nah
+            headersNode.add(headerNode);
+        });
+        objectNode.put("headers", headersNode);
         objectNode.put("type", message.getType().toString().toLowerCase());
         objectNode.put("body", mapper.convertValue(body, JsonNode.class));
-
-//        final var builder = JsonMessage.builder();
-//        builder.type(message.getType().name().toLowerCase());
-//        builder.body(body);
-//        // TODO: add headers from SimpleMQMessage
-//        final var jsonMessage = builder.build();
 
         final var s = mapper.writeValueAsString(objectNode);
         return s;

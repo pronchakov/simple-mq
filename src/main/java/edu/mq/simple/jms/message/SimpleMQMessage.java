@@ -5,12 +5,14 @@ import edu.mq.simple.jms.message.header.SimpleMQTextHeader;
 import jakarta.jms.Destination;
 import jakarta.jms.JMSException;
 import jakarta.jms.Message;
+import lombok.Getter;
 
 import java.util.Enumeration;
 import java.util.TreeMap;
 
 public abstract class SimpleMQMessage implements Message {
 
+    @Getter
     private TreeMap<String, SimpleMQHeader<?>> headers = new TreeMap<>();
 
     public abstract SimpleMQJMSMessageType getType();
@@ -182,7 +184,7 @@ public abstract class SimpleMQMessage implements Message {
 
     @Override
     public String getStringProperty(String name) throws JMSException {
-        final Object value = headers.get(name).getValue();
+        final Object value = headers.get(name);
         if (value instanceof SimpleMQTextHeader textHeader) {
             return textHeader.getValue();
         } else {

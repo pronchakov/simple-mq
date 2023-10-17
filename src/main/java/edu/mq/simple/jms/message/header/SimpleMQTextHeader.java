@@ -17,6 +17,11 @@ public class SimpleMQTextHeader extends SimpleMQHeader<String> {
     }
 
     @Override
+    public String getType() {
+        return "string";
+    }
+
+    @Override
     public String getValue() {
         return data;
     }

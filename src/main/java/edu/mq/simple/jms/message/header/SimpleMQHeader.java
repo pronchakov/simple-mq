@@ -8,5 +8,7 @@ import lombok.Data;
 public abstract class SimpleMQHeader<T> {
     private String name;
 
+    public abstract String getType();
+
     public abstract T getValue();
 }

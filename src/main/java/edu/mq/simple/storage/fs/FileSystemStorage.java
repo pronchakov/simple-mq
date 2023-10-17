@@ -30,13 +30,13 @@ public class FileSystemStorage implements Storage {
             return null;
         }
 
-        final var message = fileFormatter.transform(text);
+        final var message = fileFormatter.toMessage(text);
         return message;
     }
 
     @Override
     public void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException {
-        final var text = fileFormatter.transform(message);
+        final var text = fileFormatter.toText(message);
         getFileSystemQueue(queueName).writeFile(text);
     }
 

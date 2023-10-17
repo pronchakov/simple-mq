@@ -42,7 +42,7 @@ public class ReceiverTest {
     public void tesReceiveTextMessage() throws JMSException {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
-                  "headers" : null,
+                  "headers" : [ ],
                   "type" : "text",
                   "body" : "Hello World"
                 }""");
@@ -59,7 +59,7 @@ public class ReceiverTest {
     public void tesReceiveBytesMessage() throws JMSException {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
-                  "headers" : null,
+                  "headers" : [ ],
                   "type" : "bytes",
                   "body" : "AQID"
                 }""");
@@ -79,7 +79,7 @@ public class ReceiverTest {
     public void tesReceiveMapMessage() throws JMSException {
         TestUtils.putMessage("./db", "edu.queue.q1", """
                 {
-                  "headers" : null,
+                  "headers" : [ ],
                   "type" : "map",
                   "body" : {
                     "boolentry" : {
