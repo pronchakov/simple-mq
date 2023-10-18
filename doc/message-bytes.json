@@ -1,0 +1,16 @@
+{
+  "headers": [
+    {
+      "name": "h1",
+      "type": "string",
+      "value": "header 1"
+    },
+    {
+      "name": "h2",
+      "type": "integer",
+      "value": 123
+    }
+  ],
+  "type": "bytes",
+  "body": "AQID"
+}

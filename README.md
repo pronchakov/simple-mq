@@ -25,25 +25,51 @@ Messages saves into separate files with JSON content.
 
 #### Example
 
+Text message:
 ```json
 {
-  "headers": {
-    "header1": "value1",
-    "header2": 12
-  },
-  "bodyType" : "text",
+  "headers": [
+    {
+      "name": "h1",
+      "type": "string",
+      "value": "header 1"
+    }
+  ],
+  "type" : "text",
   "body": "Message body"
 }
 ```
 
+Bytes message:
 ```json
 {
-  "headers": {
-    "header1": "value1",
-    "header2": 12
-  },
-  "bodyType" : "bytes",
+  "headers": [
+    {
+      "name": "h2",
+      "type": "integer",
+      "value": 123
+    }
+  ],
+  "type" : "bytes",
   "body": "AQID"
+}
+```
+
+Map message:
+```json
+{
+  "headers": [ ],
+  "type" : "map",
+  "body": {
+    "m1": {
+      "type": "string",
+      "value": "qwerty"
+    },
+    "m2": {
+      "type": "integer",
+      "value": 123
+    }
+  }
 }
 ```
 
@@ -51,7 +77,7 @@ Messages saves into separate files with JSON content.
 
 ##### Header types
 
-* Nope
+* string
 
 ##### Message types
 
