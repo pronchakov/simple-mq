@@ -1,5 +1,7 @@
 ## Simple MQ
 
+![Java CI with Maven](https://github.com/pronchakov/simple-mq/actions/workflows/maven.yml/badge.svg)
+
 Current status: Early development
 
 ### About
