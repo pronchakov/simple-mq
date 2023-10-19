@@ -43,8 +43,7 @@ public class JsonFileFormatter implements FileFormatter {
                     case "string": {
                         message.setStringProperty(name, value);
                     }
-                };
-
+                }
             }
 
             return message;

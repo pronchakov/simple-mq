@@ -28,6 +28,7 @@ Messages saves into separate files with JSON content.
 #### Example
 
 Text message:
+
 ```json
 {
   "headers": [
@@ -37,12 +38,13 @@ Text message:
       "value": "header 1"
     }
   ],
-  "type" : "text",
+  "type": "text",
   "body": "Message body"
 }
 ```
 
 Bytes message:
+
 ```json
 {
   "headers": [
@@ -52,16 +54,17 @@ Bytes message:
       "value": 123
     }
   ],
-  "type" : "bytes",
+  "type": "bytes",
   "body": "AQID"
 }
 ```
 
 Map message:
+
 ```json
 {
-  "headers": [ ],
-  "type" : "map",
+  "headers": [],
+  "type": "map",
   "body": {
     "m1": {
       "type": "string",

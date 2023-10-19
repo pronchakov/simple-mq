@@ -36,7 +36,7 @@ public class HeadersTest {
         TestUtils.deleteQueue("./db", "edu.queue.q1");
     }
 
-        @Test
+    @Test
     public void stringHeaderTest() throws Exception {
         final var textMessage = session.createTextMessage("Hello World");
         textMessage.setStringProperty("key1", "value1");
