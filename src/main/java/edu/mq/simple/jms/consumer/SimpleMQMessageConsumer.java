@@ -23,7 +23,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     public Message receive() throws JMSException { // TODO: wrong implementation. add waiting
         final SimpleMQMessage jmsMessage;
         try {
-            jmsMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            jmsMessage = session.getStorage().readMessage(((Queue) destination).getQueueName()); // todo: cam be topic
             if (jmsMessage == null) {
                 return null;
             }
@@ -37,7 +37,7 @@ public class SimpleMQMessageConsumer extends SimpleMQAbstractMessageConsumer {
     public Message receiveNoWait() throws JMSException {
         final SimpleMQMessage jsonMessage;
         try {
-            jsonMessage = session.getStorage().readMessage(((Queue) destination).getQueueName());
+            jsonMessage = session.getStorage().readMessage(((Queue) destination).getQueueName()); // todo: cam be topic
             if (jsonMessage == null) {
                 return null;
             }

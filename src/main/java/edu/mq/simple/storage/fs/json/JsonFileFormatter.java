@@ -11,7 +11,7 @@ import lombok.SneakyThrows;
 public class JsonFileFormatter implements FileFormatter {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    private final BodyConverter bodyConverter = new BodyConverter();
+    private final BodyConverter bodyConverter = new BodyConverter(); // todo: make full message converter instead of body. move reading and writing headers to common abstract class of converters
 
     public JsonFileFormatter() {
         mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
@@ -19,7 +19,7 @@ public class JsonFileFormatter implements FileFormatter {
 
     @SneakyThrows
     @Override
-    public SimpleMQMessage toMessage(String text) {
+    public SimpleMQMessage convertText(String text) {
         try {
 
             final var jsonNode = mapper.readTree(text);
@@ -54,7 +54,7 @@ public class JsonFileFormatter implements FileFormatter {
 
     @SneakyThrows
     @Override
-    public String toText(SimpleMQMessage message) {
+    public String convertMessage(SimpleMQMessage message) {
         final var body = bodyConverter.toObject(message);
 
         final var objectNode = mapper.createObjectNode();

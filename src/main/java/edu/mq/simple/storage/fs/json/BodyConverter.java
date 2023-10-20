@@ -9,7 +9,7 @@ import edu.mq.simple.storage.fs.json.converter.TextMessageBodyTypeConverter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BodyConverter {
+public class BodyConverter { // todo: this class will become abstract builder for particular message builder
 
     private Map<SimpleMQJMSMessageType, BodyTypeConverter> bodyConverters = new HashMap<>() {{
         put(SimpleMQJMSMessageType.TEXT, new TextMessageBodyTypeConverter());

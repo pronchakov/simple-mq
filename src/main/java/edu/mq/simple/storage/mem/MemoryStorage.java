@@ -14,7 +14,7 @@ public class MemoryStorage implements Storage {
 
     private final Map<String, Queue<SimpleMQMessage>> queueStorage = new TreeMap<>();
 
-    private Queue<SimpleMQMessage> getQueue(final String queueName) {
+    private Queue<SimpleMQMessage> getQueue(final String queueName) { // todo: multithreading
         var queue = queueStorage.get(queueName);
         if (queue == null) {
             queue = new LinkedList<>();

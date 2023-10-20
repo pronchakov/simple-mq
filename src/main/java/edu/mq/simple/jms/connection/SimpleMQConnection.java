@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SimpleMQConnection extends SimpleMQAbstractConnection {
-    private String baseDir;
+    private String baseDir; // todo: remove basedir as it if only for FS storage
 
     @Override
     public Session createSession() throws JMSException {

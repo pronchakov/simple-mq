@@ -26,7 +26,7 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
             throw new JMSException("Unknown message type", "SMQ003");
         }
 
-        var queue = (Queue) destination;
+        var queue = (Queue) destination; // todo: can be topic
         try {
             session.getStorage().writeMessage(queue.getQueueName(), simpleMQMessage);
         } catch (CannotWriteMessageException e) {

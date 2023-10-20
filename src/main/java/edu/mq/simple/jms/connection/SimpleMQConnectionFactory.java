@@ -10,7 +10,7 @@ import lombok.NonNull;
 @Data
 public class SimpleMQConnectionFactory extends SimpleMQAbstractConnectionFactory {
     @NonNull
-    private String baseDir;
+    private String baseDir; // todo: remove basedir as it if only for FS storage
 
     @Override
     public Connection createConnection() throws JMSException {

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 @Data
-public class FileSystemQueue {
+public class DataFolder {
 
     private final File queueDir;
     private String basePath;
@@ -20,7 +20,7 @@ public class FileSystemQueue {
     private Queue<File> unreadFiles = new LinkedList<>();
     private Queue<File> readFiles = new LinkedList<>();
 
-    public FileSystemQueue(String basePath, String queueName) {
+    public DataFolder(String basePath, String queueName) {
         this.basePath = basePath;
         this.queueName = queueName;
 

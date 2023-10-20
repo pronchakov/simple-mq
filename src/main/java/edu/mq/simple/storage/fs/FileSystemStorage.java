@@ -13,7 +13,7 @@ public class FileSystemStorage implements Storage {
 
     private final String basePath;
     private FileFormatter fileFormatter = new JsonFileFormatter();
-    private Map<String, FileSystemQueue> queues = new HashMap<>();
+    private Map<String, DataFolder> dataFolders = new HashMap<>();
 
 
     public FileSystemStorage(String basePath) {
@@ -25,26 +25,26 @@ public class FileSystemStorage implements Storage {
 
     @Override
     public SimpleMQMessage readMessage(String queueName) throws CannotReadMessageException {
-        final var text = getFileSystemQueue(queueName).readFile();
+        final var text = getDataFolder(queueName).readFile();
         if (text == null) {
             return null;
         }
 
-        final var message = fileFormatter.toMessage(text);
+        final var message = fileFormatter.convertText(text);
         return message;
     }
 
     @Override
     public void writeMessage(String queueName, SimpleMQMessage message) throws CannotWriteMessageException {
-        final var text = fileFormatter.toText(message);
-        getFileSystemQueue(queueName).writeFile(text);
+        final var text = fileFormatter.convertMessage(message);
+        getDataFolder(queueName).writeFile(text);
     }
 
-    private FileSystemQueue getFileSystemQueue(String queueName) {
-        var fsQueue = queues.get(queueName);
+    private DataFolder getDataFolder(String queueName) { // todo: multithreading
+        var fsQueue = dataFolders.get(queueName);
         if (fsQueue == null) {
-            fsQueue = new FileSystemQueue(basePath, queueName);
-            queues.put(queueName, fsQueue);
+            fsQueue = new DataFolder(basePath, queueName);
+            dataFolders.put(queueName, fsQueue);
         }
         return fsQueue;
     }
