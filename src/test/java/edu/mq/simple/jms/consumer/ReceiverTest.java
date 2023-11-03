@@ -21,9 +21,7 @@ public class ReceiverTest {
     @AfterEach
     public void before() throws JMSException {
         TestUtils.deleteQueue("./db", "edu.queue.q1");
-        connectionFactory = SimpleMQConnectionFactory.builder()
-                .baseDir("./db")
-                .build();
+        connectionFactory = new SimpleMQConnectionFactory();
         connection = connectionFactory.createConnection();
         session = connection.createSession();
         queue = session.createQueue("edu.queue.q1");

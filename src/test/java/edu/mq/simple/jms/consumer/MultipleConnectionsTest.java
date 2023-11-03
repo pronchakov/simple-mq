@@ -29,9 +29,7 @@ public class MultipleConnectionsTest {
     public void testMultipleConnections() {
         TestUtils.deleteQueue("./db", "edu.queue.multiple-connections");
 
-        final var connectionFactory = SimpleMQConnectionFactory.builder()
-                .baseDir("./db")
-                .build();
+        final var connectionFactory = new SimpleMQConnectionFactory();
         @Cleanup final var connection = connectionFactory.createConnection();
         @Cleanup final var session = connection.createSession();
         final var queue = session.createQueue("edu.queue.multiple-connections");

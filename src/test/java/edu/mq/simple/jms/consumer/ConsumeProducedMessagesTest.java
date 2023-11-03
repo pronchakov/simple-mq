@@ -14,9 +14,7 @@ public class ConsumeProducedMessagesTest {
     public void consumeProducedMessages() throws JMSException {
         TestUtils.deleteQueue("./db", "edu.queue.consume-produced");
 
-        final var connectionFactory = SimpleMQConnectionFactory.builder()
-                .baseDir("./db")
-                .build();
+        final var connectionFactory = new SimpleMQConnectionFactory();
         @Cleanup final var connection = connectionFactory.createConnection();
         @Cleanup final var session = connection.createSession();
         final var queue = session.createQueue("edu.queue.consume-produced");

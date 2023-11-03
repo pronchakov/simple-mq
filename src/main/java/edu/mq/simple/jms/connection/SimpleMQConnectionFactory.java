@@ -1,19 +1,28 @@
 package edu.mq.simple.jms.connection;
 
+import edu.mq.simple.storage.Storage;
+import edu.mq.simple.storage.fs.FileSystemStorage;
 import jakarta.jms.Connection;
 import jakarta.jms.JMSException;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
 
-@Builder
 @Data
 public class SimpleMQConnectionFactory extends SimpleMQAbstractConnectionFactory {
-    @NonNull
-    private String baseDir; // todo: remove basedir as it if only for FS storage
 
     @Override
     public Connection createConnection() throws JMSException {
-        return new SimpleMQConnection(baseDir);
+        final var defaultStorage = new FileSystemStorage("./db");
+        return new SimpleMQConnection(defaultStorage);
+    }
+
+    @Override
+    public Connection createConnection(String userName, String password) throws JMSException {
+        return createConnection();
+    }
+
+    public Connection createConnection(Storage storage) throws JMSException {
+        return new SimpleMQConnection(storage);
     }
 }

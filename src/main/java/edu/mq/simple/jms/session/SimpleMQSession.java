@@ -15,12 +15,15 @@ import lombok.NonNull;
 
 @Data
 public class SimpleMQSession extends SimpleMQAbstractSession {
-    private SimpleMQConnection connection; // todo: remove connection
+    private SimpleMQConnection connection;
     private Storage storage;
 
-    public SimpleMQSession(@NonNull SimpleMQConnection connection) {
+    public SimpleMQSession(
+            @NonNull SimpleMQConnection connection,
+            @NonNull Storage storage
+    ) {
         this.connection = connection;
-        storage = new FileSystemStorage(connection.getBaseDir()); // todo: storage must be variable
+        this.storage = storage;
     }
 
     @Override
