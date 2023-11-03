@@ -8,24 +8,30 @@ Current status: Early development
 
 This is a simple implementation of JMS interface. Just for fun :-)
 
-No need to run servers, no network communication. Just pure file system implementation.
+No need to run servers, no network communication.  
+Messages can be stored: 
+1. In file system  
+2. In memory
 
-### Idea
+Default storage: File system
 
-Queues are folders. Messages are files. It's simple.
+### Storage types
 
-### Purpose
+#### File system storage
 
-Mainly educational
+Queues are folders. Messages are files.  
+Default data folder: ./db  
+File format: JSON
 
-But it can be used for testing purpose.  
-You can prepare messages as JSON in test resources and use SimpleMQ to consume these files as Messages from Queue.
+Use edu.mq.simple.storage.fs.FileSystemStorage class:
+``` java
+final var connectionFactory = new SimpleMQConnectionFactory();
+final var fileSystemStorage = new FileSystemStorage("./db");
+final var connection = connectionFactory.createConnection(fileSystemStorage);
+...
+```
 
-### Message format
-
-Messages saves into separate files with JSON content.
-
-#### Example
+##### JSON message Example
 
 Text message:
 
@@ -77,6 +83,25 @@ Map message:
   }
 }
 ```
+
+#### Memory storage
+
+Messages are objects in memory. Very fast but not persistent.
+
+Use edu.mq.simple.storage.mem.MemoryStorage class:
+``` java
+final var connectionFactory = new SimpleMQConnectionFactory();
+final var memoryStorage = new MemoryStorage();
+final var connection = connectionFactory.createConnection(memoryStorage);
+...
+```
+
+### Purpose
+
+Mainly educational
+
+But it can be used for testing purpose.  
+You can prepare messages as JSON in test resources and use SimpleMQ to consume these files as Messages from Queue.
 
 ### Working features
 
