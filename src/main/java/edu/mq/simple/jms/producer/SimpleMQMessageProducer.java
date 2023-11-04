@@ -1,5 +1,6 @@
 package edu.mq.simple.jms.producer;
 
+import edu.mq.simple.Utils;
 import edu.mq.simple.jms.message.SimpleMQMessage;
 import edu.mq.simple.jms.session.SimpleMQSession;
 import edu.mq.simple.storage.exception.CannotWriteMessageException;
@@ -10,11 +11,14 @@ import jakarta.jms.Queue;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Data
 @RequiredArgsConstructor
+@Slf4j
 public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
 
+    private String id = Utils.generateId();
     @NonNull
     private SimpleMQSession session;
     @NonNull
@@ -36,6 +40,6 @@ public class SimpleMQMessageProducer extends SimpleMQAbstractMessageProducer {
 
     @Override
     public void close() throws JMSException {
-
+        log.debug("Producer: {}: Closing producer", id);
     }
 }
